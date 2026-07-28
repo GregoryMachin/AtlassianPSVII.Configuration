@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `-WhatIf` and `-Confirm` support to mutating configuration and server configuration commands.
 - Migrated `Tools/setup.ps1` to shared `AtlassianPS.Standards` bootstrap/dependency commands with synchronized ScriptAnalyzer settings.
 - Migrated `Tools/update.dependencies.ps1` to shared `AtlassianPS.Standards\Update-AtlassianPSDependencyReference` with `ShouldProcess` and fail-fast behavior.
-- Aligned workflow setup pins and build/release standards version references to `AtlassianPS.Standards` `0.1.6`.
+- Aligned workflow setup pins and build/release standards version references to `AtlassianPS.Standards` `0.1.11`.
 - Added regression coverage for setup/update delegation and cross-surface standards version consistency.
 - Aligned build lint/publish tasks with JiraPS north-star shared helpers (`Invoke-AtlassianPSLint`, `Publish-AtlassianPSModuleRelease`, `New-AtlassianPSModulePackage`) and updated release workflow to call `Invoke-Build -Task Publish`.
 - Added release changelog extraction to publish workflow and attached changelog body to the GitHub release.
