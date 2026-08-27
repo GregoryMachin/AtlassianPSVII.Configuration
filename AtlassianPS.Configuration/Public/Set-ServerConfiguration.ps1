@@ -32,7 +32,30 @@
 
         [Parameter()]
         [Hashtable]
-        $Headers
+        $Headers,
+
+        [Parameter()]
+        [ValidateSet('', 'Bitbucket', 'Confluence', 'Jira')]
+        [String]
+        $Product,
+
+        [Parameter()]
+        [ValidateSet('', 'Cloud', 'DataCenter', 'Server')]
+        [String]
+        $DeploymentType,
+
+        [Parameter()]
+        [ValidateSet('', 'Anonymous', 'Basic', 'ApiToken', 'OAuth', 'PersonalAccessToken', 'Session', 'Cookie')]
+        [String]
+        $AuthenticationType,
+
+        [Parameter()]
+        [String]
+        $CloudId,
+
+        [Parameter()]
+        [Hashtable]
+        $SecretReference
     )
 
     begin {

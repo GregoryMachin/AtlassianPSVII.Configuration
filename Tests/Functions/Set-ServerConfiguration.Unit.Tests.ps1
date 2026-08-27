@@ -49,6 +49,18 @@ Describe "Set-ServerConfiguration" -Tag Unit {
                 $command | Should -HaveParameter "Headers" -Type [Hashtable]
             }
 
+            It "has optional deployment metadata parameters" -TestCases @(
+                @{ParameterName = "Product"; Type = [String] }
+                @{ParameterName = "DeploymentType"; Type = [String] }
+                @{ParameterName = "AuthenticationType"; Type = [String] }
+                @{ParameterName = "CloudId"; Type = [String] }
+                @{ParameterName = "SecretReference"; Type = [Hashtable] }
+            ) {
+                param($ParameterName, $Type)
+
+                $command | Should -HaveParameter $ParameterName -Type $Type
+            }
+
             It "has an alias '<alias>' for parameter '<parameter>'" -TestCases @(
                 @{ParameterName = "Uri"; AliasName = "Address" }
                 @{ParameterName = "Uri"; AliasName = "Url" }
@@ -241,6 +253,30 @@ Describe "Set-ServerConfiguration" -Tag Unit {
 
                 (Get-ServerConfiguration | Where-Object Id -eq 1).Headers | Should -BeOfType [Hashtable]
                 (Get-ServerConfiguration | Where-Object Id -eq 1).Headers.Authorization | Should -Be "Basic ABCDEF"
+            }
+
+            It "can change optional deployment metadata" {
+                Set-ServerConfiguration `
+                    -Id 1 `
+                    -Product Jira `
+                    -DeploymentType Cloud `
+                    -AuthenticationType ApiToken `
+                    -CloudId "00000000-0000-0000-0000-000000000000" `
+                    -SecretReference @{ Provider = 'SecretManagement'; Name = 'AtlassianApiToken'; Type = 'Token' }
+
+                $config = Get-ServerConfiguration | Where-Object Id -eq 1
+                $config.Product | Should -Be "Jira"
+                $config.DeploymentType | Should -Be "Cloud"
+                $config.AuthenticationType | Should -Be "ApiToken"
+                $config.CloudId | Should -Be "00000000-0000-0000-0000-000000000000"
+                $config.SecretReference.Provider | Should -Be "SecretManagement"
+                $config.SecretReference.Name | Should -Be "AtlassianApiToken"
+            }
+
+            It "rejects invalid deployment metadata values" {
+                { Set-ServerConfiguration -Id 1 -Product FishEye } | Should -Throw
+                { Set-ServerConfiguration -Id 1 -DeploymentType Hosted } | Should -Throw
+                { Set-ServerConfiguration -Id 1 -AuthenticationType Kerberos } | Should -Throw
             }
         }
     }

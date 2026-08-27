@@ -87,7 +87,24 @@ namespace AtlassianPS
                         Certificate = (X509Certificate)Table[key];
                         break;
                     case "headers":
-                        Headers = (Hashtable)Table[key];
+                        if (Table[key] is Hashtable)
+                            Headers = (Hashtable)Table[key];
+                        break;
+                    case "product":
+                        Product = Table[key] == null ? null : Table[key].ToString();
+                        break;
+                    case "deploymenttype":
+                        DeploymentType = Table[key] == null ? null : Table[key].ToString();
+                        break;
+                    case "authenticationtype":
+                        AuthenticationType = Table[key] == null ? null : Table[key].ToString();
+                        break;
+                    case "cloudid":
+                        CloudId = Table[key] == null ? null : Table[key].ToString();
+                        break;
+                    case "secretreference":
+                        if (Table[key] is Hashtable)
+                            SecretReference = (Hashtable)Table[key];
                         break;
                     default:
                         break;
@@ -105,6 +122,11 @@ namespace AtlassianPS
         public Object Session { get; set; }
         public X509Certificate Certificate { get; set; }
         public Hashtable Headers { get; set; }
+        public String Product { get; set; }
+        public String DeploymentType { get; set; }
+        public String AuthenticationType { get; set; }
+        public String CloudId { get; set; }
+        public Hashtable SecretReference { get; set; }
 
         public override String ToString()
         {

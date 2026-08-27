@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Added `PrivateData.PSData.Prerelease` to the module manifest and regression checks so release publish/version tasks cannot fail on missing prerelease metadata.
 - Removed smoke and placeholder integration test surfaces to keep this repository focused on unit/build validation.
 - Removed build-time `ModuleVersion` mutation from `UpdateManifest`; release version updates now remain publish-scoped through `SetVersion`.
+- Added optional server deployment metadata fields for product, deployment type, authentication type, and Cloud ID.
+- Added secret-reference metadata and a provider-neutral resolver for caller-supplied, environment, SecretManagement, and custom adapter secrets without persisting secret values.
+- Added product-aware Atlassian URI normalization for Cloud, Data Center, OAuth, and pagination request boundaries.
 
 ### Changed
 

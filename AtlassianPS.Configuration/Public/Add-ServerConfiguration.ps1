@@ -25,7 +25,30 @@
 
         [Parameter( ValueFromPipelineByPropertyName )]
         [Hashtable]
-        $Headers
+        $Headers,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [ValidateSet('', 'Bitbucket', 'Confluence', 'Jira')]
+        [String]
+        $Product,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [ValidateSet('', 'Cloud', 'DataCenter', 'Server')]
+        [String]
+        $DeploymentType,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [ValidateSet('', 'Anonymous', 'Basic', 'ApiToken', 'OAuth', 'PersonalAccessToken', 'Session', 'Cookie')]
+        [String]
+        $AuthenticationType,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [String]
+        $CloudId,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [Hashtable]
+        $SecretReference
     )
 
     begin {
@@ -63,13 +86,18 @@
             $index++
 
             $config = [AtlassianPS.ServerData]@{
-                Id      = $index
-                Name    = $entryName
-                Uri     = ([Uri]($Uri.AbsoluteUri -replace "\/$", ""))
-                Type    = $Type
+                Id                 = $index
+                Name               = $entryName
+                Uri                = ([Uri]($Uri.AbsoluteUri -replace "\/$", ""))
+                Type               = $Type
                 # IsCloudServer = (Test-ServerIsCloud -Type $Type -Uri $Uri -Headers $Headers -ErrorAction Stop -verbose)
-                Session = $Session
-                Headers = $entryHeaders
+                Session            = $Session
+                Headers            = $entryHeaders
+                Product            = $Product
+                DeploymentType     = $DeploymentType
+                AuthenticationType = $AuthenticationType
+                CloudId            = $CloudId
+                SecretReference    = $SecretReference
             }
 
             Write-Verbose "Adding server #$($index): [$($config.Name)]"

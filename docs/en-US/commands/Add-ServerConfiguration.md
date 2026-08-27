@@ -18,6 +18,8 @@ Stores a new Server entry for the module to known with what server it should tal
 ```powershell
 Add-AtlassianServerConfiguration [-Uri] <Uri> [[-Name] <String>]
  [-Type] <ServerType> [[-Session] <WebRequestSession>] [[-Headers] <Hashtable>]
+ [[-Product] <String>] [[-DeploymentType] <String>] [[-AuthenticationType] <String>]
+ [[-CloudId] <String>] [[-SecretReference] <Hashtable>]
  [<CommonParameters>]
 ```
 
@@ -48,6 +50,23 @@ Add-AtlassianServerConfiguration -Uri "https://server.com/" -Type "Jira"
 
 This command will store the Jira server address with the name "server.com" in memory and allow other
 commands to identify the server by the name "Server Prod"
+
+### EXAMPLE 3
+
+```powershell
+Add-AtlassianServerConfiguration -Uri "https://example.atlassian.net/" -Type "Jira" -Product "Jira" -DeploymentType "Cloud" -AuthenticationType "OAuth" -CloudId "00000000-0000-0000-0000-000000000000"
+```
+
+This command stores explicit deployment metadata with the server entry so dependent modules do not need
+to infer Cloud/Data Center routing or authentication behavior from the network.
+
+### EXAMPLE 4
+
+```powershell
+Add-AtlassianServerConfiguration -Name "Example Secret Ref" -Uri "https://example.atlassian.net/" -Type "Jira" -SecretReference @{ Provider = "Environment"; Name = "ATLASSIAN_API_TOKEN"; Type = "Token" }
+```
+
+This command stores a reference to an external secret. The token value is not stored in configuration.
 
 ## PARAMETERS
 
@@ -143,6 +162,91 @@ Aliases:
 
 Required: False
 Position: 5
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Product
+
+Optional product metadata for the server entry.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: Bitbucket, Confluence, Jira
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -DeploymentType
+
+Optional deployment metadata for the server entry.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: Cloud, DataCenter, Server
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -AuthenticationType
+
+Optional authentication metadata for the server entry.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: Anonymous, Basic, ApiToken, OAuth, PersonalAccessToken, Session, Cookie
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -CloudId
+
+Optional Atlassian Cloud ID metadata for OAuth-backed Cloud requests.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -SecretReference
+
+Optional lookup metadata for a secret stored outside the configuration file.
+Supported reference metadata includes `Provider`, `Name`, `Type`, and optional non-secret `UserName`.
+Do not store `Token`, `Password`, `Secret`, `Value`, `Credential`, `ApiKey`, or authorization material in this hashtable.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

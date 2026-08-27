@@ -13,14 +13,9 @@ Describe "Save-Configuration" -Tag Unit {
             Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
             Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
 
-            function ExportConfiguration {
-                param($InputObject)
-                $InputObject
-            }
-            Mock Import-MqcnAlias -ModuleName "AtlassianPS.Configuration" {}
-            Mock ExportConfiguration -ModuleName "AtlassianPS.Configuration" {
-                param($InputObject)
-                $InputObject
+            Mock Write-AtomicConfigurationFile -ModuleName "AtlassianPS.Configuration" {}
+            Mock Configuration\Get-ConfigurationPath -ModuleName "AtlassianPS.Configuration" {
+                $TestDrive
             }
 
             Mock Get-Configuration -ModuleName "AtlassianPS.Configuration" {
@@ -29,10 +24,17 @@ Describe "Save-Configuration" -Tag Unit {
                     Bar        = 42
                     ServerList = @(
                         [AtlassianPS.ServerData]@{
-                            Id   = 1
-                            Name = "Google"
-                            Uri  = "https://google.com"
-                            Type = "Jira"
+                            Id              = 1
+                            Name            = "Google"
+                            Uri             = "https://google.com"
+                            Type            = "Jira"
+                            Product         = "Jira"
+                            DeploymentType  = "DataCenter"
+                            SecretReference = @{
+                                Provider = "Environment"
+                                Name     = "ATLASSIAN_TOKEN"
+                                Type     = "Token"
+                            }
                         }
                         [AtlassianPS.ServerData]@{
                             Id      = 2
@@ -40,6 +42,12 @@ Describe "Save-Configuration" -Tag Unit {
                             Uri     = "https://google.com"
                             Type    = "Jira"
                             Session = (New-Object -TypeName Microsoft.PowerShell.Commands.WebRequestSession)
+                            Headers = @{
+                                Accept        = 'application/json'
+                                Authorization = 'Bearer secret-value'
+                                Cookie        = 'session=secret-value'
+                                'X-Api-Key'   = 'secret-value'
+                            }
                         }
                     )
                 }
@@ -54,10 +62,10 @@ Describe "Save-Configuration" -Tag Unit {
                 { Save-Configuration } | Should -Not -Throw
             }
 
-            It "uses the Configuration module to export the data" {
+            It "writes through the atomic persistence helper" {
                 Save-Configuration
 
-                Should -Invoke "ExportConfiguration" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 1 -Scope It
+                Should -Invoke "Write-AtomicConfigurationFile" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 1 -Scope It
             }
 
             It "exports all keys in the configuration" {
@@ -82,12 +90,45 @@ Describe "Save-Configuration" -Tag Unit {
                 ($after["ServerList"] | Where-Object Name -eq "Google with Session" | Select-Object -First 1).Session | Should -BeNullOrEmpty
             }
 
+            It "does not allow authentication headers or tokens to be exported" {
+                $after = Save-Configuration
+                $headers = (
+                    $after["ServerList"] |
+                        Where-Object Name -eq "Google with Session" |
+                        Select-Object -First 1
+                ).Headers
+
+                $headers.Accept | Should -Be 'application/json'
+                $headers.Authorization | Should -BeNullOrEmpty
+                $headers.Cookie | Should -BeNullOrEmpty
+                $headers.'X-Api-Key' | Should -BeNullOrEmpty
+            }
+
             It "does not clear sessions from the live configuration" {
                 $before = Get-Configuration -AsHashtable
 
                 Save-Configuration
 
                 ($before["ServerList"] | Where-Object Name -eq "Google with Session" | Select-Object -First 1).Session.UserAgent | Should -Not -BeNullOrEmpty
+            }
+
+            It "preserves explicit deployment metadata" {
+                $after = Save-Configuration
+                $server = $after["ServerList"] | Where-Object Name -eq "Google" | Select-Object -First 1
+
+                $server.Product | Should -Be "Jira"
+                $server.DeploymentType | Should -Be "DataCenter"
+            }
+
+            It "exports secret references without secret values" {
+                $after = Save-Configuration
+                $server = $after["ServerList"] | Where-Object Name -eq "Google" | Select-Object -First 1
+
+                $server.SecretReference.Provider | Should -Be "Environment"
+                $server.SecretReference.Name | Should -Be "ATLASSIAN_TOKEN"
+                $server.SecretReference.ContainsKey("Token") | Should -BeFalse
+                $server.SecretReference.ContainsKey("Value") | Should -BeFalse
+                $server.SecretReference.ContainsKey("Secret") | Should -BeFalse
             }
         }
     }

@@ -29,10 +29,19 @@ Add-MetadataConverter @{
         param($Indent, $TimeStamp, $BreadCrumbs, $FunctionName)
         [AtlassianPS.MessageStyle]$PSBoundParameters
     }
-    [AtlassianPS.ServerData]   = { "AtlassianPSServerData -Id {0} -Name '{1}' -Uri '{2}' -Type '{3}' -Headers {4}" -f $_.Id, $_.Name, $_.Uri, $_.Type, (ConvertTo-Metadata $_.Headers) }
+    [AtlassianPS.ServerData]   = {
+        $metadata = "AtlassianPSServerData -Id {0} -Name '{1}' -Uri '{2}' -Type '{3}' -Headers {4}" -f $_.Id, $_.Name, $_.Uri, $_.Type, (ConvertTo-Metadata $_.Headers)
+        foreach ($propertyName in @('Product', 'DeploymentType', 'AuthenticationType', 'CloudId', 'SecretReference')) {
+            if (-not [string]::IsNullOrEmpty($_.$propertyName)) {
+                $metadata += " -$propertyName {0}" -f (ConvertTo-Metadata $_.$propertyName)
+            }
+        }
+        $metadata
+    }
     AtlassianPSServerData      = {
-        param($Id, $Name, $Uri, $Type, $Headers)
-        if ([string]::IsNullOrEmpty($Headers)) { $Headers = $null }
+        param($Id, $Name, $Uri, $Type, $Headers, $Product, $DeploymentType, $AuthenticationType, $CloudId, $SecretReference)
+        if ([string]::IsNullOrEmpty($Headers)) { $null = $PSBoundParameters.Remove('Headers') }
+        if ([string]::IsNullOrEmpty($SecretReference)) { $null = $PSBoundParameters.Remove('SecretReference') }
         [AtlassianPS.ServerData]$PSBoundParameters
     }
 }

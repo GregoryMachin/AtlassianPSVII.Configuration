@@ -45,6 +45,18 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                 $command | Should -HaveParameter "Headers" -Type [Hashtable]
             }
 
+            It "has optional deployment metadata parameters" -TestCases @(
+                @{ParameterName = "Product"; Type = [String] }
+                @{ParameterName = "DeploymentType"; Type = [String] }
+                @{ParameterName = "AuthenticationType"; Type = [String] }
+                @{ParameterName = "CloudId"; Type = [String] }
+                @{ParameterName = "SecretReference"; Type = [Hashtable] }
+            ) {
+                param($ParameterName, $Type)
+
+                $command | Should -HaveParameter $ParameterName -Type $Type
+            }
+
             It "has an alias '<AliasName>' for parameter '<ParameterName>'" -TestCases @(
                 @{ParameterName = "Uri"; AliasName = "Address" }
                 @{ParameterName = "Uri"; AliasName = "Url" }
@@ -90,6 +102,37 @@ Describe "Add-ServerConfiguration" -Tag Unit {
 
                 Get-ServerConfiguration | Should -HaveCount 3
                 (Get-ServerConfiguration).Name | Should -Contain "New Server"
+            }
+
+            It "adds optional deployment metadata when provided" {
+                Add-ServerConfiguration `
+                    -Name "Cloud Jira" `
+                    -Uri "https://example.atlassian.net" `
+                    -Type Jira `
+                    -Product Jira `
+                    -DeploymentType Cloud `
+                    -AuthenticationType OAuth `
+                    -CloudId "00000000-0000-0000-0000-000000000000" `
+                    -SecretReference @{ Provider = 'Environment'; Name = 'ATLASSIAN_TOKEN'; Type = 'Token' }
+
+                $config = Get-ServerConfiguration | Where-Object Name -eq "Cloud Jira"
+                $config.Product | Should -Be "Jira"
+                $config.DeploymentType | Should -Be "Cloud"
+                $config.AuthenticationType | Should -Be "OAuth"
+                $config.CloudId | Should -Be "00000000-0000-0000-0000-000000000000"
+                $config.SecretReference.Provider | Should -Be "Environment"
+                $config.SecretReference.Name | Should -Be "ATLASSIAN_TOKEN"
+            }
+
+            It "does not default optional deployment metadata when omitted" {
+                Add-ServerConfiguration -Name "Legacy Jira" -Uri "https://legacy.example.test" -Type Jira
+
+                $config = Get-ServerConfiguration | Where-Object Name -eq "Legacy Jira"
+                $config.Product | Should -BeNullOrEmpty
+                $config.DeploymentType | Should -BeNullOrEmpty
+                $config.AuthenticationType | Should -BeNullOrEmpty
+                $config.CloudId | Should -BeNullOrEmpty
+                $config.SecretReference | Should -BeNullOrEmpty
             }
 
             It "does not add or save a server when WhatIf is used" {
@@ -284,6 +327,12 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                 (Get-ServerConfiguration | Where-Object Name -eq "New Server").Headers | Should -BeOfType [Hashtable]
                 (Get-ServerConfiguration | Where-Object Name -eq "New Server").Headers.Authorization | Should -Be "Basic ABCDEF"
 
+            }
+
+            It "rejects invalid deployment metadata values" {
+                { Add-ServerConfiguration -Name "Invalid Product" -Uri "https://atlassianps.org" -Type Jira -Product FishEye } | Should -Throw
+                { Add-ServerConfiguration -Name "Invalid Deployment" -Uri "https://atlassianps.org" -Type Jira -DeploymentType Hosted } | Should -Throw
+                { Add-ServerConfiguration -Name "Invalid Auth" -Uri "https://atlassianps.org" -Type Jira -AuthenticationType Kerberos } | Should -Throw
             }
         }
     }

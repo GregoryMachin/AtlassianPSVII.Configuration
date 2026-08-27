@@ -86,6 +86,57 @@ Required: False
 Default value: None
 ```
 
+### Product
+
+Product is optional metadata describing the Atlassian product for this server entry.
+
+```yaml
+Type: String
+Required: False
+Default value: None
+```
+
+### DeploymentType
+
+DeploymentType is optional metadata describing whether this server entry targets Cloud, Data Center, or Server.
+
+```yaml
+Type: String
+Required: False
+Default value: None
+```
+
+### AuthenticationType
+
+AuthenticationType is optional metadata describing the intended authentication model.
+
+```yaml
+Type: String
+Required: False
+Default value: None
+```
+
+### CloudId
+
+CloudId is optional metadata containing the Atlassian Cloud ID used by OAuth Cloud routes.
+
+```yaml
+Type: String
+Required: False
+Default value: None
+```
+
+### SecretReference
+
+SecretReference is optional lookup metadata for authentication material stored outside the configuration file.
+It can identify providers such as environment variables or SecretManagement secrets, but must not contain the secret value.
+
+```yaml
+Type: Hashtable
+Required: False
+Default value: None
+```
+
 ## METHODS
 
 ### ToString()

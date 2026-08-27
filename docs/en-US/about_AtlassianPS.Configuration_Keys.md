@@ -21,6 +21,10 @@ Here is the list of the currently supported Keys:
 ## ServerList
 
 Is a list of servers currently stored by the user.
+Server entries can include optional `Product`, `DeploymentType`, `AuthenticationType`, `CloudId`, and `SecretReference`
+metadata. These fields are caller-controlled configuration and should not be overwritten by server
+auto-detection when explicitly set.
+`SecretReference` stores provider lookup metadata only. Secret values must remain outside `Configuration.psd1`.
 
 > ServerData objects are describe here:  
 > <https://atlassianps.org/docs/AtlassianPS.Configuration/classes/AtlassianPS.ServerData/>

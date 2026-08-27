@@ -90,6 +90,7 @@ Describe "Validation of example codes in the documentation" -Tag Documentation, 
 
         Mock Invoke-WebRequest { } -ModuleName $script:moduleName
         Mock Invoke-RestMethod { } -ModuleName $script:moduleName
+        Mock Write-AtomicConfigurationFile { Join-Path $TestDrive 'Configuration.psd1' } -ModuleName $script:moduleName
         Mock Write-DebugMessage { } -ModuleName $script:moduleName
         Mock Write-Verbose { } -ModuleName $script:moduleName
     }
