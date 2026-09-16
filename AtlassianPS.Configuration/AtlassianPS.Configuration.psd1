@@ -13,10 +13,32 @@
         }
     )
     FormatsToProcess     = @('AtlassianPS.Configuration.format.ps1xml')
-    FunctionsToExport    = '*'
-    CmdletsToExport      = '*'
-    VariablesToExport    = '*'
-    AliasesToExport      = '*'
+    FunctionsToExport    = @(
+        'Add-ServerConfiguration'
+        'Get-Configuration'
+        'Get-ServerConfiguration'
+        'Remove-Configuration'
+        'Remove-ServerConfiguration'
+        'Set-Configuration'
+        'Set-ServerConfiguration'
+        'ConvertFrom-QueryString'
+        'ConvertFrom-URLEncoded'
+        'ConvertTo-Hashtable'
+        'ConvertTo-QueryString'
+        'ConvertTo-Uri'
+        'ConvertTo-URLEncoded'
+        'Join-Hashtable'
+        'Resolve-DefaultParameterValue'
+        'Resolve-FilePath'
+        'Resolve-SecretReference'
+        'Write-DebugMessage'
+        'Write-NonTerminatingError'
+        'Write-TerminatingError'
+        'Write-VerboseMessage'
+    )
+    CmdletsToExport      = @()
+    VariablesToExport    = @()
+    AliasesToExport      = @()
     PrivateData          = @{
         PSData = @{
             Tags         = @(

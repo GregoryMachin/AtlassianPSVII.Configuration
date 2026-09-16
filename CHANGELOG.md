@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Improvements
 
+- Declared the source manifest's `FunctionsToExport`/`CmdletsToExport`/`VariablesToExport`/`AliasesToExport` explicitly instead of `'*'` (Phase 9 Task 58), making the manifest's `FunctionsToExport` this module's committed compatibility baseline, and added a new `Tests/Project.Tests.ps1` assertion that fails the build if the declared list drifts from the actual `Public/` folder contents. Module behavior is unchanged: `AtlassianPS.Configuration.psm1` already restricted runtime exports to `Public/*.ps1` via `Export-ModuleMember`, and no cmdlet, variable, or persistent alias was ever actually exported despite the wildcards.
 - Added `-WhatIf` and `-Confirm` support to mutating configuration and server configuration commands.
 - Migrated `Tools/setup.ps1` to shared `AtlassianPS.Standards` bootstrap/dependency commands with synchronized ScriptAnalyzer settings.
 - Migrated `Tools/update.dependencies.ps1` to shared `AtlassianPS.Standards\Update-AtlassianPSDependencyReference` with `ShouldProcess` and fail-fast behavior.
