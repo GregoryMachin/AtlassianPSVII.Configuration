@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 0.3 - 2026-09-17
+
 ### Improvements
 
+- Bumped the `AtlassianPS.Standards` pin from `0.1.11` to a locally built `0.2.0`, resolved via a sibling `.local-modules/` directory rather than the real PowerShell Gallery (this fork's own local development has no relationship to the real, independently published `AtlassianPS.Standards` release line). `Tools/setup.ps1` and the hard `#requires` pin in `AtlassianPS.Configuration.build.ps1` both now resolve `0.2.0`.
 - Declared the source manifest's `FunctionsToExport`/`CmdletsToExport`/`VariablesToExport`/`AliasesToExport` explicitly instead of `'*'` (Phase 9 Task 58), making the manifest's `FunctionsToExport` this module's committed compatibility baseline, and added a new `Tests/Project.Tests.ps1` assertion that fails the build if the declared list drifts from the actual `Public/` folder contents. Module behavior is unchanged: `AtlassianPS.Configuration.psm1` already restricted runtime exports to `Public/*.ps1` via `Export-ModuleMember`, and no cmdlet, variable, or persistent alias was ever actually exported despite the wildcards.
 - Added `-WhatIf` and `-Confirm` support to mutating configuration and server configuration commands.
 - Migrated `Tools/setup.ps1` to shared `AtlassianPS.Standards` bootstrap/dependency commands with synchronized ScriptAnalyzer settings.
