@@ -486,6 +486,20 @@ task Package {
 #endregion BuildRelease
 
 #region Test
+# Loads the Pester version pinned in Tools/build.requirements.psd1. Without it, Invoke-Pester
+# auto-loads whichever Pester comes first on PSModulePath, which may not satisfy the tests'
+# #requires range (those files then fail discovery instead of running).
+function Import-PinnedPester {
+    # Import-PowerShellDataFile returns only the first entry of this array-style file, so parse
+    # it the way AtlassianPSVII.Standards does (safe AST evaluation of the data literal).
+    $requirementsAst = [System.Management.Automation.Language.Parser]::ParseFile(
+        "$PSScriptRoot/Tools/build.requirements.psd1", [ref]$null, [ref]$null)
+    $pesterRequirement = $requirementsAst.EndBlock.Statements[0].PipelineElements[0].Expression.SafeGetValue() |
+        Where-Object { $_.ModuleName -eq 'Pester' }
+    $pinnedVersion = [Version]$pesterRequirement.RequiredVersion
+    Get-Module -Name 'Pester' | Where-Object { $_.Version -ne $pinnedVersion } | Remove-Module -Force
+    Import-Module -Name 'Pester' -RequiredVersion $pinnedVersion -Global -ErrorAction Stop
+}
 task Test Init, {
     Assert-True { Test-Path $env:BHBuildOutput -PathType Container } "Release path must exist"
 
@@ -535,8 +549,10 @@ task Test Init, {
         Write-Build Gray "Excluding tests by tag(s): $($pesterConfigHash.Filter.ExcludeTag -join ', ')"
     }
 
+    Import-PinnedPester
     $pesterConfig = New-PesterConfiguration -Hashtable $pesterConfigHash
     $testResults = Invoke-Pester -Configuration $pesterConfig
+    Assert-True ($testResults.FailedContainersCount -eq 0) "$($testResults.FailedContainersCount) test file(s) failed to run (discovery or setup error)."
 
     Assert-True ($testResults.FailedCount -eq 0) "$($testResults.FailedCount) Pester test(s) failed."
 }

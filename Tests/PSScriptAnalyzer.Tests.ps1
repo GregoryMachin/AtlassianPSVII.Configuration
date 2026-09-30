@@ -1,4 +1,4 @@
-﻿#requires -modules @{ ModuleName = "Pester"; ModuleVersion = "5.7"; MaximumVersion = "5.999" }
+﻿#requires -modules @{ ModuleName = "Pester"; ModuleVersion = "6.2"; MaximumVersion = "6.999" }
 #requires -modules @{ ModuleName = 'PSScriptAnalyzer'; ModuleVersion = '1.25.0' }
 
 Describe "PSScriptAnalyzer Tests" -Tag Build {
