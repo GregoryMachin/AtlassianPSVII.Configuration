@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## 1.0.0 - 2026-10-01
+
+- **Breaking:** forked from `AtlassianPS.Configuration` 0.3 and renamed to `AtlassianPSVII.Configuration`: new module name and GUID; .NET types moved to the `AtlassianPSVII` namespace (`[AtlassianPSVII.ServerData]`, `[AtlassianPSVII.ServerType]`, `[AtlassianPSVII.MessageStyle]`); configuration is now stored under the `AtlassianPSVII` company folder (`AtlassianPSVII/AtlassianPSVII.Configuration`), so settings saved by the upstream module are not picked up. Command names (`*-Atlassian*`) are unchanged.
+- Build now pins `AtlassianPSVII.Standards` 1.0.0.
+
 ## 0.3 - 2026-09-17
 
 ### Improvements
