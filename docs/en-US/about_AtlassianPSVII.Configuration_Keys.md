@@ -50,7 +50,7 @@ Used By: none yet
 
 In case you find that this document is not be up-to-date,
 please let us know on github as an
-[issue](https://github.com/AtlassianPS/AtlassianPS.Configuration/issues/new).
+[issue](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/issues/new).
 
 # RELATED LINKS
 

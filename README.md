@@ -1,12 +1,13 @@
+
+> **Fork notice:** AtlassianPSVII.Configuration is a fork of [AtlassianPS.Configuration](https://github.com/AtlassianPS/AtlassianPS.Configuration) by the [AtlassianPS](https://github.com/AtlassianPS) team (MIT License), renamed and maintained by Gregory Machin. "VII" is only part of the name: it supports Windows PowerShell 5.1 and PowerShell 7.4+, and can be loaded side by side with the upstream module.
 ---
 layout: module
 permalink: /module/AtlassianPSVII.Configuration/
 ---
 # [AtlassianPSVII.Configuration](https://atlassianps.org/module/AtlassianPS.Configuration)
 
-[![GitHub release](https://img.shields.io/github/release/AtlassianPS/AtlassianPS.Configuration.svg?style=for-the-badge)](https://github.com/AtlassianPS/AtlassianPS.Configuration/releases/latest)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/AtlassianPS/AtlassianPS.Configuration/ci.yml?style=for-the-badge)](https://github.com/AtlassianPS/AtlassianPS.Configuration/actions/workflows/ci.yml)
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/AtlassianPS.Configuration.svg?style=for-the-badge)](https://www.powershellgallery.com/packages/AtlassianPS.Configuration)
+[![GitHub release](https://img.shields.io/github/release/GregoryMachin/AtlassianPSVII.Configuration.svg?style=for-the-badge)](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/releases/latest)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/GregoryMachin/AtlassianPSVII.Configuration/ci.yml?style=for-the-badge)](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/actions/workflows/ci.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)
 
 AtlassianPSVII.Configuration is a module that offers a common set of tools to the [AtlassianPSVII] products to handle user-specific configuration.
@@ -24,8 +25,15 @@ Join the conversation on [![SlackLogo][] AtlassianPSVII.Slack.com](https://atlas
 
 ### Installation
 
-> This module does not need to be installed manually.  
-> [AtlassianPSVII] products which use this module will install it automatically using the [PowerShell Gallery].
+AtlassianPSVII.Configuration is not published to the PowerShell Gallery; use it straight from its repository:
+
+```powershell
+git clone https://github.com/GregoryMachin/AtlassianPSVII.Configuration.git
+Import-Module ./AtlassianPSVII.Configuration/AtlassianPSVII.Configuration/AtlassianPSVII.Configuration.psd1
+```
+
+For the built release copy (merged module and compiled help) run `./Tools/setup.ps1` and
+`Invoke-Build -Task Build` in the clone, then import `./Release/AtlassianPSVII.Configuration/AtlassianPSVII.Configuration.psd1`.
 
 ### Usage
 
@@ -68,10 +76,10 @@ Check out our guidelines on [Contributing] to our modules and documentation.
 
 | Configuration | Status |
 | ------------- | ------ |
-| Windows PowerShell v5.1 | [CI workflow](https://github.com/AtlassianPS/AtlassianPS.Configuration/actions/workflows/ci.yml) |
-| PowerShell 7 on Windows | [CI workflow](https://github.com/AtlassianPS/AtlassianPS.Configuration/actions/workflows/ci.yml) |
-| PowerShell 7 on Ubuntu | [CI workflow](https://github.com/AtlassianPS/AtlassianPS.Configuration/actions/workflows/ci.yml) |
-| PowerShell 7 on macOS | [CI workflow](https://github.com/AtlassianPS/AtlassianPS.Configuration/actions/workflows/ci.yml) |
+| Windows PowerShell v5.1 | [CI workflow](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/actions/workflows/ci.yml) |
+| PowerShell 7 on Windows | [CI workflow](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/actions/workflows/ci.yml) |
+| PowerShell 7 on Ubuntu | [CI workflow](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/actions/workflows/ci.yml) |
+| PowerShell 7 on macOS | [CI workflow](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/actions/workflows/ci.yml) |
 
 ## Acknowledgements
 
@@ -83,7 +91,7 @@ Check out our guidelines on [Contributing] to our modules and documentation.
 * [Latest Release]
 * [Submit an Issue]
 * [Contributing]
-* How you can help us: [List of Issues](https://github.com/AtlassianPS/AtlassianPS.Configuration/issues?q=is%3Aissue+is%3Aopen+label%3Aup-for-grabs)
+* How you can help us: [List of Issues](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/issues?q=is%3Aissue+is%3Aopen+label%3Aup-for-grabs)
 
 ## Disclaimer
 
@@ -94,10 +102,10 @@ Hopefully this is obvious, but:
 <!-- reference-style links -->
   [AtlassianPSVII]: https://atlassianps.org/
   [PowerShell Gallery]: https://www.powershellgallery.com/
-  [Source Code]: https://github.com/AtlassianPS/AtlassianPS.Configuration
-  [Latest Release]: https://github.com/AtlassianPS/AtlassianPS.Configuration/releases/latest
-  [Submit an Issue]: https://github.com/AtlassianPS/AtlassianPS.Configuration/issues/new
-  [MIT license]: https://github.com/AtlassianPS/AtlassianPS.Configuration/blob/master/LICENSE
+  [Source Code]: https://github.com/GregoryMachin/AtlassianPSVII.Configuration
+  [Latest Release]: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/releases/latest
+  [Submit an Issue]: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/issues/new
+  [MIT license]: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/LICENSE
   [Contributing]: https://atlassianps.org/docs/Contributing/
 
 <!-- [//]: # (Sweet online markdown editor at http://dillinger.io) -->

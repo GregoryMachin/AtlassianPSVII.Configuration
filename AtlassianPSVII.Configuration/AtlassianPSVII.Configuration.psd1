@@ -4,7 +4,7 @@
     GUID                 = '3f17d2ff-3fd0-46a8-bf56-35300ba2d24e'
     Author               = 'Lipkau'
     CompanyName          = 'AtlassianPSVII'
-    Copyright            = '(c) 2018 AtlassianPSVII. All rights reserved.'
+    Copyright            = '(c) 2018 AtlassianPS; (c) 2026 Gregory Machin. MIT License.'
     Description          = "A module for modules - AtlasianPS modules use this to handle the user's configuration"
     RequiredModules      = @(
         @{
@@ -45,10 +45,10 @@
                 'AtlassianPSVII'
                 'Configuration'
             )
-            LicenseUri   = 'https://github.com/AtlassianPS/AtlassianPS.Configuration/blob/master/LICENSE'
-            ProjectUri   = 'https://github.com/AtlassianPS/AtlassianPS.Configuration'
+            LicenseUri   = 'https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/LICENSE'
+            ProjectUri   = 'https://github.com/GregoryMachin/AtlassianPSVII.Configuration'
             IconUri      = 'https://atlassianps.org/assets/img/AtlassianPS.Configuration.png'
-            ReleaseNotes = 'https://github.com/AtlassianPS/AtlassianPS.Configuration/blob/master/CHANGELOG.md'
+            ReleaseNotes = 'https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/CHANGELOG.md'
             Prerelease   = ''
         }
     }
