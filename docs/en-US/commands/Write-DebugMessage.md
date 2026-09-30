@@ -1,6 +1,6 @@
 ---
-external help file: AtlassianPS.Configuration-help.xml
-Module Name: AtlassianPS.Configuration
+external help file: AtlassianPSVII.Configuration-help.xml
+Module Name: AtlassianPSVII.Configuration
 online version: https://atlassianps.org/docs/AtlassianPS.Configuration/commands/Write-DebugMessage/
 locale: en-US
 schema: 2.0.0
@@ -41,7 +41,7 @@ Writes the debug message and keeps the same debug preference in scope.
 ### EXAMPLE 2
 
 ```powershell
-Set-AtlassianConfiguration -Name Message -Value ([AtlassianPS.MessageStyle]::new(2, $false, $true, $false))
+Set-AtlassianConfiguration -Name Message -Value ([AtlassianPSVII.MessageStyle]::new(2, $false, $true, $false))
 Write-AtlassianDebugMessage -Message 'Shared runtime diagnostic message.'
 ```
 

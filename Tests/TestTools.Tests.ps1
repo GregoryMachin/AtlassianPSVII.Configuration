@@ -5,7 +5,7 @@ Describe 'Initialize-TestEnvironment' -Tag Unit {
         . "$PSScriptRoot/Helpers/TestTools.ps1"
     }
 
-    It 'returns the path to the AtlassianPS.Configuration manifest' {
+    It 'returns the path to the AtlassianPSVII.Configuration manifest' {
         $path = Initialize-TestEnvironment
         $path | Should -Not -BeNullOrEmpty
         Test-Path $path | Should -BeTrue
@@ -14,13 +14,13 @@ Describe 'Initialize-TestEnvironment' -Tag Unit {
 
     It 'is a no-op when the loaded module already matches the on-disk source' {
         Initialize-TestEnvironment | Out-Null
-        $loadedBefore = Get-Module 'AtlassianPS.Configuration'
+        $loadedBefore = Get-Module 'AtlassianPSVII.Configuration'
 
         $sentinel = [Guid]::NewGuid().ToString()
         & $loadedBefore { param($s) $script:__InitTestSentinel = $s } $sentinel
 
         Initialize-TestEnvironment | Out-Null
-        $loadedAfter = Get-Module 'AtlassianPS.Configuration'
+        $loadedAfter = Get-Module 'AtlassianPSVII.Configuration'
         $survivor = & $loadedAfter { $script:__InitTestSentinel }
 
         $survivor | Should -Be $sentinel -Because 'a cache hit must not touch the loaded module'
@@ -28,13 +28,13 @@ Describe 'Initialize-TestEnvironment' -Tag Unit {
 
     It 'reimports the module when the cached fingerprint no longer matches' {
         Initialize-TestEnvironment | Out-Null
-        $loaded = Get-Module 'AtlassianPS.Configuration'
+        $loaded = Get-Module 'AtlassianPSVII.Configuration'
 
         & $loaded { $script:__InitTestSentinel = 'should-not-survive' }
         & $loaded { param($fp) $script:__TestImportFingerprint = $fp } 0
 
         Initialize-TestEnvironment | Out-Null
-        $reloaded = Get-Module 'AtlassianPS.Configuration'
+        $reloaded = Get-Module 'AtlassianPSVII.Configuration'
         $survivor = & $reloaded { $script:__InitTestSentinel }
 
         $survivor | Should -BeNullOrEmpty -Because 'a fingerprint mismatch must trigger a fresh import'

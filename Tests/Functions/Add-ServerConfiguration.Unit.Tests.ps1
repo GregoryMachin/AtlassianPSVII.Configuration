@@ -7,14 +7,14 @@ Describe "Add-ServerConfiguration" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
             #region Mocking
-            Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-            Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
-            Mock Save-Configuration -ModuleName "AtlassianPS.Configuration" {}
+            Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Save-Configuration -ModuleName "AtlassianPSVII.Configuration" {}
 
-            Mock Get-ServerConfiguration -ModuleName "AtlassianPS.Configuration" {
+            Mock Get-ServerConfiguration -ModuleName "AtlassianPSVII.Configuration" {
                 $script:Configuration["ServerList"]
             }
             #endregion Mocking
@@ -33,8 +33,8 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                 $command | Should -HaveParameter "Name" -Type [String]
             }
 
-            It "has a mandatory parameter 'Type' of type [AtlassianPS.ServerType]" {
-                $command | Should -HaveParameter "Type" -Mandatory -Type [AtlassianPS.ServerType]
+            It "has a mandatory parameter 'Type' of type [AtlassianPSVII.ServerType]" {
+                $command | Should -HaveParameter "Type" -Mandatory -Type [AtlassianPSVII.ServerType]
             }
 
             It "has a parameter 'Session' of type [Microsoft.PowerShell.Commands.WebRequestSession]" {
@@ -76,13 +76,13 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -140,7 +140,7 @@ Describe "Add-ServerConfiguration" -Tag Unit {
 
                 Get-ServerConfiguration | Should -HaveCount 2
                 (Get-ServerConfiguration).Name | Should -Not -Contain "New Server"
-                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 0 -Scope It
+                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPSVII.Configuration" -Exactly -Times 0 -Scope It
             }
 
             It "uses the [Uri]::Authority as default for server's name" {
@@ -241,13 +241,13 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -269,7 +269,7 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                 (Get-ServerConfiguration).Name | Should -Contain "atlassianps.org"
             }
 
-            It "only allowed AtlassianPS server types" {
+            It "only allowed AtlassianPSVII server types" {
                 Get-ServerConfiguration | Should -HaveCount 2
 
                 { Add-ServerConfiguration -Name "Bitbucket" -Uri "https://atlassianps.org" -Type Bitbucket } | Should -Not -Throw

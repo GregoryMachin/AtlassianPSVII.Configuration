@@ -7,7 +7,7 @@ Describe "Resolve-DefaultParameterValue" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "resolves matching defaults only" {
             $reference = @{
                 "Invoke-WebRequest:TimeoutSec" = 30

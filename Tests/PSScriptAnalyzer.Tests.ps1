@@ -6,7 +6,7 @@ Describe "PSScriptAnalyzer Tests" -Tag Build {
         . "$PSScriptRoot/Helpers/TestTools.ps1"
         $script:moduleToTest = Initialize-TestEnvironment
         $projectRoot = if ($env:BHisBuild) { $env:BHBuildOutput } else { $env:BHProjectPath }
-        $modulePath = Join-Path $projectRoot "AtlassianPS.Configuration"
+        $modulePath = Join-Path $projectRoot "AtlassianPSVII.Configuration"
         $settingsPath = Join-Path $projectRoot "PSScriptAnalyzerSettings.psd1"
 
         $params = @{

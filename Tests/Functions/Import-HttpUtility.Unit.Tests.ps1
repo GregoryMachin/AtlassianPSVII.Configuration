@@ -7,7 +7,7 @@ Describe "Import-HttpUtility" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "loads System.Web.HttpUtility" {
             Import-HttpUtility
 

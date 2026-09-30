@@ -3,9 +3,9 @@ layout: documentation
 permalink: /docs/AtlassianPS.Configuration/commands/
 hide: true
 ---
-# AtlassianPS.Configuration commands
+# AtlassianPSVII.Configuration commands
 
-AtlassianPS.Configuration exports these commands with the `Atlassian` default command prefix.
+AtlassianPSVII.Configuration exports these commands with the `Atlassian` default command prefix.
 The documentation pages use the source function names that back the exported commands.
 
 | Exported command | Documentation |
@@ -18,4 +18,4 @@ The documentation pages use the source function names that back the exported com
 | `Set-AtlassianConfiguration` | [Set-Configuration](/docs/AtlassianPS.Configuration/commands/Set-Configuration/) |
 | `Set-AtlassianServerConfiguration` | [Set-ServerConfiguration](/docs/AtlassianPS.Configuration/commands/Set-ServerConfiguration/) |
 
-For module overview and setup, see [about_AtlassianPS.Configuration](/docs/AtlassianPS.Configuration/).
+For module overview and setup, see [about_AtlassianPSVII.Configuration](/docs/AtlassianPS.Configuration/).

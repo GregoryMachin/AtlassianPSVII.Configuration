@@ -6,11 +6,11 @@ function Clear-TestConfigurationCache {
     param()
 
     $configurationPaths = @(
-        Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'powershell/AtlassianPS/AtlassianPS.Configuration/Configuration.psd1'
-        Join-Path ([Environment]::GetFolderPath('ApplicationData')) 'powershell/AtlassianPS/AtlassianPS.Configuration/Configuration.psd1'
-        Join-Path ([Environment]::GetFolderPath('CommonApplicationData')) 'powershell/AtlassianPS/AtlassianPS.Configuration/Configuration.psd1'
-        Join-Path $HOME '.config/powershell/AtlassianPS/AtlassianPS.Configuration/Configuration.psd1'
-        Join-Path $HOME '.local/share/powershell/AtlassianPS/AtlassianPS.Configuration/Configuration.psd1'
+        Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'powershell/AtlassianPSVII/AtlassianPSVII.Configuration/Configuration.psd1'
+        Join-Path ([Environment]::GetFolderPath('ApplicationData')) 'powershell/AtlassianPSVII/AtlassianPSVII.Configuration/Configuration.psd1'
+        Join-Path ([Environment]::GetFolderPath('CommonApplicationData')) 'powershell/AtlassianPSVII/AtlassianPSVII.Configuration/Configuration.psd1'
+        Join-Path $HOME '.config/powershell/AtlassianPSVII/AtlassianPSVII.Configuration/Configuration.psd1'
+        Join-Path $HOME '.local/share/powershell/AtlassianPSVII/AtlassianPSVII.Configuration/Configuration.psd1'
     ) | Select-Object -Unique
 
     foreach ($path in $configurationPaths) {
@@ -50,7 +50,7 @@ function Initialize-TestEnvironment {
     [OutputType([string])]
     param()
 
-    $moduleName = 'AtlassianPS.Configuration'
+    $moduleName = 'AtlassianPSVII.Configuration'
     $manifestPath = Resolve-ModuleSource
     $moduleDir = Split-Path $manifestPath -Parent
     $projectRoot = Resolve-ProjectRoot
@@ -120,7 +120,7 @@ function Resolve-ModuleSource {
     [OutputType([string])]
     param()
 
-    $moduleName = 'AtlassianPS.Configuration'
+    $moduleName = 'AtlassianPSVII.Configuration'
     $projectRoot = Resolve-ProjectRoot
     ${/} = [System.IO.Path]::DirectorySeparatorChar
 

@@ -7,7 +7,7 @@ Describe "Resolve-FullPath" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "resolves a valid file path" {
             $filePath = Join-Path -Path $TestDrive -ChildPath "fullpath.txt"
             Set-Content -LiteralPath $filePath -Value "hello"

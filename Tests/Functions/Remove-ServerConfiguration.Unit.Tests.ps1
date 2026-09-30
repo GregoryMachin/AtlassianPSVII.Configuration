@@ -7,12 +7,12 @@ Describe "Remove-ServerConfiguration" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
             #region Mocking
-            Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-            Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
-            Mock Save-Configuration -ModuleName "AtlassianPS.Configuration" {}
+            Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Save-Configuration -ModuleName "AtlassianPSVII.Configuration" {}
 
             Mock Get-ServerConfiguration {
                 $script:Configuration["ServerList"]
@@ -46,13 +46,13 @@ Describe "Remove-ServerConfiguration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -77,7 +77,7 @@ Describe "Remove-ServerConfiguration" -Tag Unit {
 
                 Get-ServerConfiguration | Should -HaveCount 2
                 (Get-ServerConfiguration).Name | Should -Contain "Google"
-                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 0 -Scope It
+                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPSVII.Configuration" -Exactly -Times 0 -Scope It
             }
 
             It "removes multiple entries of the servers" {
@@ -86,7 +86,7 @@ Describe "Remove-ServerConfiguration" -Tag Unit {
                 Remove-ServerConfiguration -Name "Google", "Google with Session"
 
                 Get-ServerConfiguration | Should -BeNullOrEmpty
-                $script:Configuration["ServerList"].GetType() | Should -Be ([System.Collections.Generic.List[AtlassianPS.ServerData]])
+                $script:Configuration["ServerList"].GetType() | Should -Be ([System.Collections.Generic.List[AtlassianPSVII.ServerData]])
             }
 
             It "accepts an object over the pipeline" {
@@ -107,7 +107,7 @@ Describe "Remove-ServerConfiguration" -Tag Unit {
                 "Google", "Google with Session" | Remove-ServerConfiguration
 
                 Get-ServerConfiguration | Should -BeNullOrEmpty
-                $script:Configuration["ServerList"].GetType() | Should -Be ([System.Collections.Generic.List[AtlassianPS.ServerData]])
+                $script:Configuration["ServerList"].GetType() | Should -Be ([System.Collections.Generic.List[AtlassianPSVII.ServerData]])
             }
 
             It "writes an error when the server could not be removed" {

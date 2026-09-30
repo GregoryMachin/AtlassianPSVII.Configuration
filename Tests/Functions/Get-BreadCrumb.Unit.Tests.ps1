@@ -7,7 +7,7 @@ Describe "Get-BreadCrumb" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         #region Arrange
         #endregion Arrange
 
@@ -29,13 +29,13 @@ Describe "Get-BreadCrumb" -Tag Unit {
                     function1
                 }
                 $breadCrumb | Should -Not -BeNullOrEmpty
-                $breadCrumb | Should -Match '^function2 > function1 > ( > )*AtlassianPS\.Configuration\.psm1 > '
+                $breadCrumb | Should -Match '^function2 > function1 > ( > )*AtlassianPSVII\.Configuration\.psm1 > '
             }
 
             It "allows for customizing of the delimiter" {
                 $breadCrumb = Get-BreadCrumb -Delimiter "--> "
                 $breadCrumb | Should -Not -BeNullOrEmpty
-                $breadCrumb | Should -Match '^--> (-->\s*)*AtlassianPS\.Configuration\.psm1-->\s*'
+                $breadCrumb | Should -Match '^--> (-->\s*)*AtlassianPSVII\.Configuration\.psm1-->\s*'
             }
         }
     }

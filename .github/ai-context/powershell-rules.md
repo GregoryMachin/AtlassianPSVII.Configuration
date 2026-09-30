@@ -1,4 +1,4 @@
-# AtlassianPS.Configuration PowerShell Rules
+# AtlassianPSVII.Configuration PowerShell Rules
 
 This file captures practical coding/build/test rules shared across AI entry points.
 
@@ -21,18 +21,18 @@ Instruction-only changes may be skipped by CI path filters; run local validation
 
 ## Source Layout
 
-- Public cmdlets: `AtlassianPS.Configuration/Public/*.ps1`
-- Private helpers: `AtlassianPS.Configuration/Private/*.ps1`
-- Module bootstrap/schema wiring: `AtlassianPS.Configuration/AtlassianPS.Configuration.psm1`
-- Persisted defaults: `AtlassianPS.Configuration/Configuration.psd1`
-- Build script: `AtlassianPS.Configuration.build.ps1`
+- Public cmdlets: `AtlassianPSVII.Configuration/Public/*.ps1`
+- Private helpers: `AtlassianPSVII.Configuration/Private/*.ps1`
+- Module bootstrap/schema wiring: `AtlassianPSVII.Configuration/AtlassianPSVII.Configuration.psm1`
+- Persisted defaults: `AtlassianPSVII.Configuration/Configuration.psd1`
+- Build script: `AtlassianPSVII.Configuration.build.ps1`
 - Docs/help sources: `docs/en-US/commands/*.md`, `docs/en-US/about_*.md`
 - Tests: `Tests/**/*.ps1`
 
 ## Configuration Compatibility Rules
 
 - Keep persisted key semantics backward compatible (`Message`, `ServerList`).
-- Keep `ServerList` entries compatible with `[AtlassianPS.ServerData]`.
+- Keep `ServerList` entries compatible with `[AtlassianPSVII.ServerData]`.
 - Preserve metadata converter contracts used by `Import-Configuration` / `Export-Configuration`.
 - Persist updates through `Save-Configuration` (which strips `ServerList[].Session` intentionally).
 - Do not introduce direct ad-hoc writes to user configuration files.

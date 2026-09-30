@@ -7,9 +7,9 @@ Describe "Resolve-SecretReference" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
-            $script:environmentVariableName = "ATLASSIANPS_TEST_TOKEN_$([Guid]::NewGuid().ToString('N'))"
+            $script:environmentVariableName = "ATLASSIANPSVII_TEST_TOKEN_$([Guid]::NewGuid().ToString('N'))"
             [Environment]::SetEnvironmentVariable($script:environmentVariableName, $null)
         }
 
@@ -83,7 +83,7 @@ Describe "Resolve-SecretReference" -Tag Unit {
         }
 
         It "fails when SecretManagement is unavailable" {
-            Mock Get-Command -ModuleName AtlassianPS.Configuration {
+            Mock Get-Command -ModuleName AtlassianPSVII.Configuration {
                 $null
             } -ParameterFilter { $Name -eq 'Get-Secret' }
 

@@ -7,7 +7,7 @@ Describe "ConvertFrom-QueryString" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "parses query string values to hashtable" {
             $parsed = ConvertFrom-QueryString -Query "?jql=project%3DTEST&max=25&empty="
 

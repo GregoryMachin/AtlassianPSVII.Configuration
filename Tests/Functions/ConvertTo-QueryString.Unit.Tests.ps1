@@ -7,7 +7,7 @@ Describe "ConvertTo-QueryString" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "builds query-string format from hashtable" {
             $query = ConvertTo-QueryString -InputObject ([Ordered]@{
                     jql = "project=TEST"

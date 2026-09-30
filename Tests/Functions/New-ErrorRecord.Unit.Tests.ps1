@@ -7,7 +7,7 @@ Describe "New-ErrorRecord" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "creates error records for existing exceptions" {
             $record = New-ErrorRecord `
                 -Mode ExistingException `

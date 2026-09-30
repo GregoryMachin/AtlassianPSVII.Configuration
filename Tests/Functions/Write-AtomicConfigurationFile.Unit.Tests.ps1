@@ -7,20 +7,20 @@ Describe "Write-AtomicConfigurationFile" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
             $script:configurationPath = Join-Path $TestDrive 'Configuration.psd1'
             Get-ChildItem -LiteralPath $TestDrive -Force -ErrorAction SilentlyContinue |
                 Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
             $script:configuration = @{
-                Message    = [AtlassianPS.MessageStyle]@{
+                Message    = [AtlassianPSVII.MessageStyle]@{
                     Indent       = 2
                     TimeStamp    = $true
                     BreadCrumbs  = $false
                     FunctionName = $true
                 }
                 ServerList = @(
-                    [AtlassianPS.ServerData]@{
+                    [AtlassianPSVII.ServerData]@{
                         Id   = 1
                         Name = 'Example'
                         Uri  = 'https://example.test'
@@ -37,9 +37,9 @@ Describe "Write-AtomicConfigurationFile" -Tag Unit {
 
             $result | Should -Be $script:configurationPath
             $saved = Import-Metadata -Path $script:configurationPath
-            $saved.Message | Should -BeOfType [AtlassianPS.MessageStyle]
+            $saved.Message | Should -BeOfType [AtlassianPSVII.MessageStyle]
             @($saved.ServerList) | Should -HaveCount 1
-            $saved.ServerList[0] | Should -BeOfType [AtlassianPS.ServerData]
+            $saved.ServerList[0] | Should -BeOfType [AtlassianPSVII.ServerData]
         }
 
         It "atomically replaces an existing configuration" {
@@ -79,7 +79,7 @@ Describe "Write-AtomicConfigurationFile" -Tag Unit {
                 -InputObject $script:configuration `
                 -Path $script:configurationPath
             $before = [IO.File]::ReadAllBytes($script:configurationPath)
-            Mock Import-Metadata -ModuleName AtlassianPS.Configuration {
+            Mock Import-Metadata -ModuleName AtlassianPSVII.Configuration {
                 throw 'Invalid serialized data'
             }
 
@@ -148,7 +148,7 @@ Describe "Write-AtomicConfigurationFile" -Tag Unit {
                 -InputObject $script:configuration `
                 -Path $script:configurationPath
             $before = [IO.File]::ReadAllBytes($script:configurationPath)
-            Mock Protect-ConfigurationFile -ModuleName AtlassianPS.Configuration {
+            Mock Protect-ConfigurationFile -ModuleName AtlassianPSVII.Configuration {
                 throw 'Protection failed'
             }
 

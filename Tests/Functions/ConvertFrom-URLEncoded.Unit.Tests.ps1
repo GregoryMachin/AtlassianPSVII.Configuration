@@ -7,7 +7,7 @@ Describe "ConvertFrom-URLEncoded" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "decodes encoded text" {
             ConvertFrom-URLEncoded -InputString "hello+world%2Bvalue" | Should -Be "hello world+value"
         }

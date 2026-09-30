@@ -1,6 +1,6 @@
 ---
-external help file: AtlassianPS.Configuration-help.xml
-Module Name: AtlassianPS.Configuration
+external help file: AtlassianPSVII.Configuration-help.xml
+Module Name: AtlassianPSVII.Configuration
 online version: https://atlassianps.org/docs/AtlassianPS.Configuration/commands/Set-ServerConfiguration/
 locale: en-US
 schema: 2.0.0
@@ -290,7 +290,7 @@ For more information, see about_CommonParameters
 
 ## RELATED LINKS
 
-[AtlassianPS.ServerData](../../classes/AtlassianPS.ServerData/)
+[AtlassianPSVII.ServerData](../../classes/AtlassianPSVII.ServerData/)
 
 [Get-ServerConfiguration](../Get-ServerConfiguration/)
 

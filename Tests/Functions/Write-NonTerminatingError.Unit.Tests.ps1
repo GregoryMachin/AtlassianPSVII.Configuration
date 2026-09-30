@@ -7,7 +7,7 @@ Describe "Write-NonTerminatingError" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "writes a non-terminating error record" {
             function Invoke-TestWriteNonTerminatingError {
                 [CmdletBinding()]

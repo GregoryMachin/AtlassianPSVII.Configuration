@@ -69,7 +69,7 @@ jobs:
           body: ${{ steps.changelog.outputs.body }}
           tag_name: ${{ steps.release_ref.outputs.release_tag }}
           name: ${{ steps.release_ref.outputs.release_tag }}
-          files: ./Release/AtlassianPS.Configuration.zip
+          files: ./Release/AtlassianPSVII.Configuration.zip
           fail_on_unmatched_files: true
           draft: false
           prerelease: ${{ contains(steps.release_ref.outputs.release_tag, 'alpha') || contains(steps.release_ref.outputs.release_tag, 'beta') || contains(steps.release_ref.outputs.release_tag, 'rc') }}
@@ -83,4 +83,4 @@ jobs:
           token: ${{ secrets.HOMEPAGE_PAT }}
           repository: AtlassianPS/AtlassianPS.github.io
           event-type: module-release
-          client-payload: "{\"module\": \"AtlassianPS.Configuration\", \"version\": \"${{ steps.release_ref.outputs.release_tag }}\"}"
+          client-payload: "{\"module\": \"AtlassianPSVII.Configuration\", \"version\": \"${{ steps.release_ref.outputs.release_tag }}\"}"

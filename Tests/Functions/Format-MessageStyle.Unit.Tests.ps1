@@ -7,7 +7,7 @@ Describe "Format-MessageStyle" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "formats messages with breadcrumbs and indentation" {
             function Invoke-TestFormatMessageStyle {
                 [CmdletBinding()]
@@ -15,7 +15,7 @@ Describe "Format-MessageStyle" -Tag Unit {
 
                 Format-MessageStyle `
                     -Message 'styled-message' `
-                    -MessageSettings ([AtlassianPS.MessageStyle]::new(2, $false, $true, $false))
+                    -MessageSettings ([AtlassianPSVII.MessageStyle]::new(2, $false, $true, $false))
             }
 
             $output = Invoke-TestFormatMessageStyle
@@ -34,7 +34,7 @@ Describe "Format-MessageStyle" -Tag Unit {
                 Format-MessageStyle `
                     -Message 'styled-message' `
                     -Cmdlet $PSCmdlet `
-                    -MessageSettings ([AtlassianPS.MessageStyle]::new(0, $false, $false, $true))
+                    -MessageSettings ([AtlassianPSVII.MessageStyle]::new(0, $false, $false, $true))
             }
 
             Invoke-TestFormatMessageStyleFunctionName | Should -Be '[Invoke-TestFormatMessageStyleFunctionName] styled-message'

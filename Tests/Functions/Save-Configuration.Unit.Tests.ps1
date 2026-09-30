@@ -7,23 +7,23 @@ Describe "Save-Configuration" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
             #region Mocking
-            Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-            Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
+            Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
 
-            Mock Write-AtomicConfigurationFile -ModuleName "AtlassianPS.Configuration" {}
-            Mock Configuration\Get-ConfigurationPath -ModuleName "AtlassianPS.Configuration" {
+            Mock Write-AtomicConfigurationFile -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Configuration\Get-ConfigurationPath -ModuleName "AtlassianPSVII.Configuration" {
                 $TestDrive
             }
 
-            Mock Get-Configuration -ModuleName "AtlassianPS.Configuration" {
+            Mock Get-Configuration -ModuleName "AtlassianPSVII.Configuration" {
                 @{
                     Foo        = "lorem ipsum"
                     Bar        = 42
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id              = 1
                             Name            = "Google"
                             Uri             = "https://google.com"
@@ -36,7 +36,7 @@ Describe "Save-Configuration" -Tag Unit {
                                 Type     = "Token"
                             }
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -65,7 +65,7 @@ Describe "Save-Configuration" -Tag Unit {
             It "writes through the atomic persistence helper" {
                 Save-Configuration
 
-                Should -Invoke "Write-AtomicConfigurationFile" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 1 -Scope It
+                Should -Invoke "Write-AtomicConfigurationFile" -ModuleName "AtlassianPSVII.Configuration" -Exactly -Times 1 -Scope It
             }
 
             It "exports all keys in the configuration" {
@@ -76,7 +76,7 @@ Describe "Save-Configuration" -Tag Unit {
                 $after["Bar"] | Should -Not -BeNullOrEmpty
                 $after["Bar"] | Should -BeOfType [Int]
                 $after["ServerList"] | Should -Not -BeNullOrEmpty
-                ($after["ServerList"] | Select-Object -First 1) | Should -BeOfType [AtlassianPS.ServerData]
+                ($after["ServerList"] | Select-Object -First 1) | Should -BeOfType [AtlassianPSVII.ServerData]
                 $after["ServerList"] | Should -HaveCount 2
             }
 

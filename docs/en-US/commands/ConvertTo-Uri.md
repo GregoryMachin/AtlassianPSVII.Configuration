@@ -1,6 +1,6 @@
 ---
-external help file: AtlassianPS.Configuration-help.xml
-Module Name: AtlassianPS.Configuration
+external help file: AtlassianPSVII.Configuration-help.xml
+Module Name: AtlassianPSVII.Configuration
 online version: https://atlassianps.org/docs/AtlassianPS.Configuration/commands/ConvertTo-Uri/
 locale: en-US
 schema: 2.0.0

@@ -7,12 +7,12 @@ Describe "Remove-Configuration" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
             #region Mocking
-            Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-            Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
-            Mock Save-Configuration -ModuleName "AtlassianPS.Configuration" {}
+            Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Save-Configuration -ModuleName "AtlassianPSVII.Configuration" {}
 
             Mock Get-Configuration {
                 $tempConfig = $script:Configuration.Clone()
@@ -45,13 +45,13 @@ Describe "Remove-Configuration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -80,7 +80,7 @@ Describe "Remove-Configuration" -Tag Unit {
 
                 Get-Configuration | Should -HaveCount 4
                 Get-Configuration | Where-Object Name -eq "Foo" | Should -Not -BeNullOrEmpty
-                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 0 -Scope It
+                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPSVII.Configuration" -Exactly -Times 0 -Scope It
             }
 
             It "removes multiple entries at once" {
@@ -135,7 +135,7 @@ Describe "Remove-Configuration" -Tag Unit {
             }
 
             It "allows the Message configuration key to be removed" {
-                $script:Configuration["Message"] = [AtlassianPS.MessageStyle]::new()
+                $script:Configuration["Message"] = [AtlassianPSVII.MessageStyle]::new()
 
                 Remove-Configuration -Name "Message"
 

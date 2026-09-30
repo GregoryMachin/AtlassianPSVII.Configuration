@@ -7,7 +7,7 @@ Describe "ConvertTo-SecretResolution" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "converts strings to secure token results" {
             $resolved = ConvertTo-SecretResolution -Secret 'secret-value' -SecretType Token -Source Test
 

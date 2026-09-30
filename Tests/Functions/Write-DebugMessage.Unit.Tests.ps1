@@ -7,7 +7,7 @@ Describe "Write-DebugMessage" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         #region Mocking
         #endregion Mocking
 
@@ -55,7 +55,7 @@ Describe "Write-DebugMessage" -Tag Unit {
                 $originalPreference = $DebugPreference
                 $originalMessageStyle = $script:Configuration["Message"]
                 $DebugPreference = 'Continue'
-                $script:Configuration["Message"] = [AtlassianPS.MessageStyle]::new(2, $false, $true, $false)
+                $script:Configuration["Message"] = [AtlassianPSVII.MessageStyle]::new(2, $false, $true, $false)
 
                 try {
                     function Invoke-TestWriteDebugMessage {
@@ -80,7 +80,7 @@ Describe "Write-DebugMessage" -Tag Unit {
                 $originalPreference = $DebugPreference
                 $originalMessageStyle = $script:Configuration["Message"]
                 $DebugPreference = 'Continue'
-                $script:Configuration["Message"] = [AtlassianPS.MessageStyle]::new(0, $false, $false, $true)
+                $script:Configuration["Message"] = [AtlassianPSVII.MessageStyle]::new(0, $false, $false, $true)
 
                 try {
                     function Invoke-TestWriteDebugMessageFunctionName {

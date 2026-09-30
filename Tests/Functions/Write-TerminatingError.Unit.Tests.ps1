@@ -7,7 +7,7 @@ Describe "Write-TerminatingError" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "throws a terminating error record" {
             function Invoke-TestWriteTerminatingError {
                 [CmdletBinding()]

@@ -84,7 +84,7 @@ Describe "Validation of example codes in the documentation" -Tag Documentation, 
         & $script:module {
             $script:previousConfig = $script:Configuration
             $script:Configuration = @{
-                ServerList = [System.Collections.Generic.List[AtlassianPS.ServerData]]::new()
+                ServerList = [System.Collections.Generic.List[AtlassianPSVII.ServerData]]::new()
             }
         }
 

@@ -7,10 +7,10 @@ Describe "Get-Configuration" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         #region Mocking
-        Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-        Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
+        Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+        Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
         #endregion Mocking
 
         Context "Sanity checking" {
@@ -39,13 +39,13 @@ Describe "Get-Configuration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -68,7 +68,7 @@ Describe "Get-Configuration" -Tag Unit {
                 ($config | Where-Object Name -eq "Baz").Value | Should -Not -BeNullOrEmpty
                 ($config | Where-Object Name -eq "Baz").Value | Should -BeOfType [DateTime]
                 ($config | Where-Object Name -eq "ServerList").Value | Should -Not -BeNullOrEmpty
-                ($config | Where-Object Name -eq "ServerList").Value | Should -BeOfType [AtlassianPS.ServerData]
+                ($config | Where-Object Name -eq "ServerList").Value | Should -BeOfType [AtlassianPSVII.ServerData]
                 ($config | Where-Object Name -eq "ServerList").Value.Session[0] | Should -BeNullOrEmpty
                 ($config | Where-Object Name -eq "ServerList").Value.Session[1] | Should -Not -BeNullOrEmpty
             }
@@ -121,7 +121,7 @@ Describe "Get-Configuration" -Tag Unit {
                 $config["Baz"] | Should -Not -BeNullOrEmpty
                 $config["Baz"] | Should -BeOfType [DateTime]
                 $config["ServerList"] | Should -Not -BeNullOrEmpty
-                $config["ServerList"] | Should -BeOfType [AtlassianPS.ServerData]
+                $config["ServerList"] | Should -BeOfType [AtlassianPSVII.ServerData]
                 $config["ServerList"].Session[0] | Should -BeNullOrEmpty
                 $config["ServerList"].Session[1] | Should -Not -BeNullOrEmpty
             }

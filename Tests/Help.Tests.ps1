@@ -6,6 +6,8 @@ BeforeDiscovery {
     $script:moduleToTest = Initialize-TestEnvironment
     $script:projectRoot = Resolve-ProjectRoot
     $script:moduleName = $env:BHProjectName
+    # The docs are still hosted on the upstream atlassianps.org site, under the upstream module name.
+    $script:docsSiteName = $script:moduleName -replace 'PSVII', 'PS'
     $script:modulePrefix = (Import-PowerShellDataFile -Path $env:BHManifestToTest).DefaultCommandPrefix
 
     ${/} = [regex]::Escape([System.IO.Path]::DirectorySeparatorChar)
@@ -94,7 +96,7 @@ Describe "Help tests" -Tag "Documentation", "Build" {
         It "defines the frontmatter for the homepage" {
             $markdownFile | Should -FileContentMatch "Module Name: $moduleName"
             $markdownFile | Should -FileContentMatchExactly "layout: documentation"
-            $markdownFile | Should -FileContentMatch "permalink: /docs/$moduleName*"
+            $markdownFile | Should -FileContentMatch "permalink: /docs/$docsSiteName*"
         }
     }
 
@@ -140,7 +142,7 @@ Describe "Help tests" -Tag "Documentation", "Build" {
                 }
 
                 It "has a valid online version" {
-                    $pattern = [regex]::Escape("https://atlassianps.org/docs/$moduleName/commands/$documentationName/")
+                    $pattern = [regex]::Escape("https://atlassianps.org/docs/$docsSiteName/commands/$documentationName/")
                     $markdownFile | Should -FileContentMatch $pattern
                 }
 
@@ -148,7 +150,7 @@ Describe "Help tests" -Tag "Documentation", "Build" {
                     $markdownFile | Should -Not -BeNullOrEmpty
                     $markdownFile | Should -FileContentMatch "Module Name: $moduleName"
                     $markdownFile | Should -FileContentMatchExactly "layout: documentation"
-                    $markdownFile | Should -FileContentMatch "permalink: /docs/$moduleName/commands/$documentationName/"
+                    $markdownFile | Should -FileContentMatch "permalink: /docs/$docsSiteName/commands/$documentationName/"
                 }
             }
 
@@ -193,12 +195,12 @@ Describe "Help tests" -Tag "Documentation", "Build" {
 
                     $onlineLink.Authority | Should -Be "atlassianps.org"
                     $onlineLink.Scheme | Should -Be "https"
-                    $onlineLink.PathAndQuery | Should -Be "/docs/$moduleName/commands/$documentationName/"
+                    $onlineLink.PathAndQuery | Should -Be "/docs/$docsSiteName/commands/$documentationName/"
                 }
 
                 It "has a valid HelpUri" -Skip { #TODO: Fix HelpUri generation
                     $command.HelpUri | Should -Not -BeNullOrEmpty
-                    $pattern = [regex]::Escape("https://atlassianps.org/docs/$moduleName/commands/$documentationName")
+                    $pattern = [regex]::Escape("https://atlassianps.org/docs/$docsSiteName/commands/$documentationName")
                     $command.HelpUri | Should -Match $pattern
                 }
 

@@ -1,4 +1,4 @@
-# AI Instructions for AtlassianPS.Configuration
+# AI Instructions for AtlassianPSVII.Configuration
 
 > **Canonical AI guidance for this repository.**
 > `CLAUDE.md`, `GEMINI.md`, `.github/copilot-instructions.md`, `.github/instructions/*.instructions.md`, and `.cursor/rules/*.mdc` must stay aligned with this file.
@@ -18,24 +18,24 @@
 |------|-------------|----------------------|
 | GitHub Copilot | `.github/copilot-instructions.md` | `AGENTS.md`, `.github/ai-context/powershell-rules.md` |
 | GitHub Copilot (file rules) | `.github/instructions/configuration-compatibility.instructions.md` | `.github/ai-context/powershell-rules.md` |
-| Cursor | `.cursor/rules/atlassianps-configuration.mdc` | `AGENTS.md`, `.github/ai-context/powershell-rules.md` |
+| Cursor | `.cursor/rules/atlassianpsvii-configuration.mdc` | `AGENTS.md`, `.github/ai-context/powershell-rules.md` |
 | Claude Code | `CLAUDE.md` | `AGENTS.md`, `.github/ai-context/powershell-rules.md` |
 | Gemini/Antigravity | `GEMINI.md` | `AGENTS.md`, `.github/ai-context/powershell-rules.md` |
 
 ## Repository Surfaces
 
-- Module source: `AtlassianPS.Configuration/Public/*.ps1`, `AtlassianPS.Configuration/Private/*.ps1`
-- Module bootstrap and schema wiring: `AtlassianPS.Configuration/AtlassianPS.Configuration.psm1`
-- Persisted defaults: `AtlassianPS.Configuration/Configuration.psd1`
-- Build entrypoint: `AtlassianPS.Configuration.build.ps1`
+- Module source: `AtlassianPSVII.Configuration/Public/*.ps1`, `AtlassianPSVII.Configuration/Private/*.ps1`
+- Module bootstrap and schema wiring: `AtlassianPSVII.Configuration/AtlassianPSVII.Configuration.psm1`
+- Persisted defaults: `AtlassianPSVII.Configuration/Configuration.psd1`
+- Build entrypoint: `AtlassianPSVII.Configuration.build.ps1`
 - Tests: `Tests/**/*.ps1`
 - Help sources: `docs/en-US/commands/*.md`, `docs/en-US/about_*.md`
 
 ## Configuration Schema and Compatibility Requirements
 
 - Keep top-level configuration keys compatible with existing installs, especially `Message` and `ServerList`.
-- Keep `ServerList` entries compatible with `[AtlassianPS.ServerData]` serialization/deserialization.
-- Preserve metadata converter contracts in `AtlassianPS.Configuration.psm1` (`AtlassianPSMessageStyle`, `AtlassianPSServerData`).
+- Keep `ServerList` entries compatible with `[AtlassianPSVII.ServerData]` serialization/deserialization.
+- Preserve metadata converter contracts in `AtlassianPSVII.Configuration.psm1` (`AtlassianPSVIIMessageStyle`, `AtlassianPSVIIServerData`).
 - Persist config only through `Save-Configuration`; it intentionally strips `ServerList[].Session` before export.
 - Do not rename/remove persisted keys or change semantics without migration coverage and regression tests.
 

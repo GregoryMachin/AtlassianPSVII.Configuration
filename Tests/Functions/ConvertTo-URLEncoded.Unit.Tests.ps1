@@ -7,7 +7,7 @@ Describe "ConvertTo-URLEncoded" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "encodes plain text" {
             ConvertTo-URLEncoded -InputString "hello world+value" | Should -Not -Be "hello world+value"
         }

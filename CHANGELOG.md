@@ -11,16 +11,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Improvements
 
-- Bumped the `AtlassianPS.Standards` pin from `0.1.11` to a locally built `0.2.0`, resolved via a sibling `.local-modules/` directory rather than the real PowerShell Gallery (this fork's own local development has no relationship to the real, independently published `AtlassianPS.Standards` release line). `Tools/setup.ps1` and the hard `#requires` pin in `AtlassianPS.Configuration.build.ps1` both now resolve `0.2.0`.
-- Declared the source manifest's `FunctionsToExport`/`CmdletsToExport`/`VariablesToExport`/`AliasesToExport` explicitly instead of `'*'` (Phase 9 Task 58), making the manifest's `FunctionsToExport` this module's committed compatibility baseline, and added a new `Tests/Project.Tests.ps1` assertion that fails the build if the declared list drifts from the actual `Public/` folder contents. Module behavior is unchanged: `AtlassianPS.Configuration.psm1` already restricted runtime exports to `Public/*.ps1` via `Export-ModuleMember`, and no cmdlet, variable, or persistent alias was ever actually exported despite the wildcards.
+- Bumped the `AtlassianPSVII.Standards` pin from `0.1.11` to a locally built `0.2.0`, resolved via a sibling `.local-modules/` directory rather than the real PowerShell Gallery (this fork's own local development has no relationship to the real, independently published `AtlassianPSVII.Standards` release line). `Tools/setup.ps1` and the hard `#requires` pin in `AtlassianPSVII.Configuration.build.ps1` both now resolve `0.2.0`.
+- Declared the source manifest's `FunctionsToExport`/`CmdletsToExport`/`VariablesToExport`/`AliasesToExport` explicitly instead of `'*'` (Phase 9 Task 58), making the manifest's `FunctionsToExport` this module's committed compatibility baseline, and added a new `Tests/Project.Tests.ps1` assertion that fails the build if the declared list drifts from the actual `Public/` folder contents. Module behavior is unchanged: `AtlassianPSVII.Configuration.psm1` already restricted runtime exports to `Public/*.ps1` via `Export-ModuleMember`, and no cmdlet, variable, or persistent alias was ever actually exported despite the wildcards.
 - Added `-WhatIf` and `-Confirm` support to mutating configuration and server configuration commands.
-- Migrated `Tools/setup.ps1` to shared `AtlassianPS.Standards` bootstrap/dependency commands with synchronized ScriptAnalyzer settings.
-- Migrated `Tools/update.dependencies.ps1` to shared `AtlassianPS.Standards\Update-AtlassianPSDependencyReference` with `ShouldProcess` and fail-fast behavior.
-- Aligned workflow setup pins and build/release standards version references to `AtlassianPS.Standards` `0.1.11`.
+- Migrated `Tools/setup.ps1` to shared `AtlassianPSVII.Standards` bootstrap/dependency commands with synchronized ScriptAnalyzer settings.
+- Migrated `Tools/update.dependencies.ps1` to shared `AtlassianPSVII.Standards\Update-AtlassianPSVIIDependencyReference` with `ShouldProcess` and fail-fast behavior.
+- Aligned workflow setup pins and build/release standards version references to `AtlassianPSVII.Standards` `0.1.11`.
 - Added regression coverage for setup/update delegation and cross-surface standards version consistency.
-- Aligned build lint/publish tasks with JiraPS north-star shared helpers (`Invoke-AtlassianPSLint`, `Publish-AtlassianPSModuleRelease`, `New-AtlassianPSModulePackage`) and updated release workflow to call `Invoke-Build -Task Publish`.
+- Aligned build lint/publish tasks with JiraPSVII north-star shared helpers (`Invoke-AtlassianPSVIILint`, `Publish-AtlassianPSVIIModuleRelease`, `New-AtlassianPSVIIModulePackage`) and updated release workflow to call `Invoke-Build -Task Publish`.
 - Added release changelog extraction to publish workflow and attached changelog body to the GitHub release.
-- Wired `changelog-to-release` to `./.github/changelog.configuration.json` for JiraPS-parity release note rendering.
+- Wired `changelog-to-release` to `./.github/changelog.configuration.json` for JiraPSVII-parity release note rendering.
 - Added `PrivateData.PSData.Prerelease` to the module manifest and regression checks so release publish/version tasks cannot fail on missing prerelease metadata.
 - Removed smoke and placeholder integration test surfaces to keep this repository focused on unit/build validation.
 - Removed build-time `ModuleVersion` mutation from `UpdateManifest`; release version updates now remain publish-scoped through `SetVersion`.
@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Added a dedicated shared runtime helper surface in `Public/SharedRuntime` and `Private/SharedRuntime`.
 - Added `Write-VerboseMessage` as a public shared runtime helper for formatted verbose output without shadowing PowerShell's built-in `Write-Verbose`.
-- Moved shared runtime helper implementations from `AtlassianPS.Standards` into `AtlassianPS.Configuration` to keep standards tooling-focused.
+- Moved shared runtime helper implementations from `AtlassianPSVII.Standards` into `AtlassianPSVII.Configuration` to keep standards tooling-focused.
 
 ### Fixed
 

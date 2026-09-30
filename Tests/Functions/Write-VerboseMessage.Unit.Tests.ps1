@@ -7,7 +7,7 @@ Describe "Write-VerboseMessage" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         Context "Sanity checking" {
             BeforeAll {
                 $script:command = Get-Command -Name Write-VerboseMessage
@@ -57,7 +57,7 @@ Describe "Write-VerboseMessage" -Tag Unit {
                 $originalPreference = $VerbosePreference
                 $originalMessageStyle = $script:Configuration["Message"]
                 $VerbosePreference = 'Continue'
-                $script:Configuration["Message"] = [AtlassianPS.MessageStyle]::new(2, $false, $true, $false)
+                $script:Configuration["Message"] = [AtlassianPSVII.MessageStyle]::new(2, $false, $true, $false)
 
                 try {
                     function Invoke-TestWriteVerboseMessage {
@@ -82,7 +82,7 @@ Describe "Write-VerboseMessage" -Tag Unit {
                 $originalPreference = $VerbosePreference
                 $originalMessageStyle = $script:Configuration["Message"]
                 $VerbosePreference = 'Continue'
-                $script:Configuration["Message"] = [AtlassianPS.MessageStyle]::new(0, $false, $false, $true)
+                $script:Configuration["Message"] = [AtlassianPSVII.MessageStyle]::new(0, $false, $false, $true)
 
                 try {
                     function Invoke-TestWriteVerboseMessageFunctionName {

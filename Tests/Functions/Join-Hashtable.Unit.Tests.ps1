@@ -7,7 +7,7 @@ Describe "Join-Hashtable" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "merges hashtables with last-value wins" {
             $result = @(
                 @{ a = 1; b = 2 }

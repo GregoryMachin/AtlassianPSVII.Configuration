@@ -1,0 +1,119 @@
+﻿function Add-ServerConfiguration {
+    # .ExternalHelp ..\AtlassianPSVII.Configuration-help.xml
+    [CmdletBinding( ConfirmImpact = 'Low', SupportsShouldProcess = $true )]
+    [OutputType( [void] )]
+    param(
+        [Parameter( Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName )]
+        [Alias('Url', 'Address')]
+        [ValidateScript( { $_.IsAbsoluteUri } )]
+        [Uri]
+        $Uri,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [ValidateNotNullOrEmpty()]
+        [Alias('ServerName', 'Alias')]
+        [String]
+        $Name,
+
+        [Parameter( Mandatory, ValueFromPipelineByPropertyName )]
+        [AtlassianPSVII.ServerType]
+        $Type,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [Microsoft.PowerShell.Commands.WebRequestSession]
+        $Session,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [Hashtable]
+        $Headers,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [ValidateSet('', 'Bitbucket', 'Confluence', 'Jira')]
+        [String]
+        $Product,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [ValidateSet('', 'Cloud', 'DataCenter', 'Server')]
+        [String]
+        $DeploymentType,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [ValidateSet('', 'Anonymous', 'Basic', 'ApiToken', 'OAuth', 'PersonalAccessToken', 'Session', 'Cookie')]
+        [String]
+        $AuthenticationType,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [String]
+        $CloudId,
+
+        [Parameter( ValueFromPipelineByPropertyName )]
+        [Hashtable]
+        $SecretReference
+    )
+
+    begin {
+        Write-Verbose "Function started"
+
+        $serverList = [System.Collections.Generic.List[AtlassianPSVII.ServerData]]::new()
+        foreach ($server in @(Get-ServerConfiguration)) {
+            $serverList.Add($server)
+        }
+
+        $configurationChanged = $false
+    }
+
+    process {
+        Write-DebugMessage "ParameterSetName: $($PsCmdlet.ParameterSetName)"
+        Write-DebugMessage "PSBoundParameters: $($PSBoundParameters | Out-String)"
+
+        $entryName = if ($PSBoundParameters.ContainsKey('Name')) { $Name } else { $Uri.Authority }
+        $entryHeaders = if ($PSBoundParameters.ContainsKey('Headers')) { $Headers } else { @{} }
+
+        if ($serverList | Where-Object Name -eq $entryName) {
+            $writeErrorSplat = @{
+                ExceptionType = "System.ApplicationException"
+                Message       = "An entry with name [$entryName] already exists"
+                ErrorId       = "AtlassianPSVII.ServerData.EntryExists"
+                Category      = "InvalidData"
+                TargetObject  = $entryName
+            }
+            WriteError @writeErrorSplat
+        }
+        elseif ($PSCmdlet.ShouldProcess($entryName, "Add server configuration")) {
+            if (-not ($index = ($serverList.Id | Measure-Object -Maximum).Maximum)) {
+                $index = 0
+            }
+            $index++
+
+            $config = [AtlassianPSVII.ServerData]@{
+                Id                 = $index
+                Name               = $entryName
+                Uri                = ([Uri]($Uri.AbsoluteUri -replace "\/$", ""))
+                Type               = $Type
+                # IsCloudServer = (Test-ServerIsCloud -Type $Type -Uri $Uri -Headers $Headers -ErrorAction Stop -verbose)
+                Session            = $Session
+                Headers            = $entryHeaders
+                Product            = $Product
+                DeploymentType     = $DeploymentType
+                AuthenticationType = $AuthenticationType
+                CloudId            = $CloudId
+                SecretReference    = $SecretReference
+            }
+
+            Write-Verbose "Adding server #$($index): [$($config.Name)]"
+            Write-DebugMessage "Adding server `$config: $($config.Name) @ index $index" -BreakPoint
+            $serverList.Add($config)
+            $configurationChanged = $true
+        }
+    }
+
+    end {
+        if ($configurationChanged) {
+            Write-DebugMessage "Persisting ServerList"
+            $script:Configuration["ServerList"] = $serverList
+            Save-Configuration
+        }
+
+        Write-Verbose "Function ended"
+    }
+}

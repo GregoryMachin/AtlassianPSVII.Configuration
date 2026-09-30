@@ -7,8 +7,8 @@ BeforeDiscovery {
     $script:module = Get-Module $env:BHProjectName
     $script:modulePrefix = (Import-PowerShellDataFile -Path $env:BHManifestToTest).DefaultCommandPrefix
     $script:testFiles = Get-ChildItem $PSScriptRoot -Include "*.Tests.ps1" -Recurse
-    $script:loadedNamespace = [AtlassianPS.ServerData].Assembly.GetTypes() | Where-Object {
-        $_.IsPublic -and $_.Namespace -eq 'AtlassianPS'
+    $script:loadedNamespace = [AtlassianPSVII.ServerData].Assembly.GetTypes() | Where-Object {
+        $_.IsPublic -and $_.Namespace -eq 'AtlassianPSVII'
     }
     $script:publicFunctionFiles = @(
         Get-ChildItem "$env:BHModulePath/Public" -Recurse -File -Filter "*.ps1" |
@@ -114,7 +114,7 @@ Describe "General project validation" -Tag Unit {
         It "uses the MIT license" {
             Test-Path "$env:BHProjectPath/LICENSE" | Should -BeTrue
             "$env:BHProjectPath/LICENSE" | Should -FileContentMatchExactly "MIT License"
-            "$env:BHProjectPath/LICENSE" | Should -FileContentMatch "Copyright \(c\) 20\d{2} AtlassianPS"
+            "$env:BHProjectPath/LICENSE" | Should -FileContentMatch "Copyright \(c\) 20\d{2} AtlassianPSVII"
         }
 
         It "has a .gitignore" {

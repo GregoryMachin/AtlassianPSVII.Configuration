@@ -7,7 +7,7 @@ Describe "ConvertTo-Hashtable" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         #region Mocking
         #endregion Mocking
 

@@ -1,6 +1,6 @@
 ﻿#requires -modules @{ ModuleName = "Pester"; ModuleVersion = "5.7"; MaximumVersion = "5.999" }
 
-Describe 'AtlassianPS.Standards version consistency' -Tag Unit {
+Describe 'AtlassianPSVII.Standards version consistency' -Tag Unit {
     BeforeAll {
         . "$PSScriptRoot/../Helpers/TestTools.ps1"
         $script:projectRoot = Resolve-ProjectRoot
@@ -10,7 +10,7 @@ Describe 'AtlassianPS.Standards version consistency' -Tag Unit {
         $buildRequirementsPath = Join-Path -Path $script:projectRoot -ChildPath 'Tools/build.requirements.psd1'
         $buildRequirements = Import-PowerShellDataFile -Path $buildRequirementsPath
         $standardsRequirement = $buildRequirements |
-            Where-Object { $_.ModuleName -eq 'AtlassianPS.Standards' } |
+            Where-Object { $_.ModuleName -eq 'AtlassianPSVII.Standards' } |
             Select-Object -First 1
         $standardsVersion = [string] $standardsRequirement.RequiredVersion
 
@@ -41,27 +41,27 @@ Describe 'AtlassianPS.Standards version consistency' -Tag Unit {
         $buildRequirementsPath = Join-Path -Path $script:projectRoot -ChildPath 'Tools/build.requirements.psd1'
         $buildRequirements = Import-PowerShellDataFile -Path $buildRequirementsPath
         $standardsRequirement = $buildRequirements |
-            Where-Object { $_.ModuleName -eq 'AtlassianPS.Standards' } |
+            Where-Object { $_.ModuleName -eq 'AtlassianPSVII.Standards' } |
             Select-Object -First 1
         $standardsVersion = [string] $standardsRequirement.RequiredVersion
 
-        $buildScriptContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath 'AtlassianPS.Configuration.build.ps1') -Raw
-        $buildScriptContent | Should -Match "ModuleName\s*=\s*'AtlassianPS\.Standards';\s*ModuleVersion\s*=\s*'$([regex]::Escape($standardsVersion))';\s*MaximumVersion\s*=\s*'$([regex]::Escape($standardsVersion))'"
+        $buildScriptContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath 'AtlassianPSVII.Configuration.build.ps1') -Raw
+        $buildScriptContent | Should -Match "ModuleName\s*=\s*'AtlassianPSVII\.Standards';\s*ModuleVersion\s*=\s*'$([regex]::Escape($standardsVersion))';\s*MaximumVersion\s*=\s*'$([regex]::Escape($standardsVersion))'"
 
         $releaseWorkflowContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath '.github/workflows/release.yml') -Raw
         $releaseWorkflowContent | Should -Match "Invoke-Build\s+-Task\s+Publish\s+-VersionToPublish\s+\$\{\{\s*steps\.release_ref\.outputs\.release_tag\s*\}\}"
         $releaseWorkflowContent | Should -Match '-PSGalleryAPIKey\s+\$\{\{\s*secrets\.PSGALLERY_API_KEY\s*\}\}'
         $releaseWorkflowContent | Should -Match 'MatteoCampinoti94/changelog-to-release@v1\.0\.6'
         $releaseWorkflowContent | Should -Match 'body:\s+\$\{\{\s*steps\.changelog\.outputs\.body\s*\}\}'
-        $releaseWorkflowContent | Should -Not -Match 'Import-Module\s+AtlassianPS\.Standards\s+-RequiredVersion'
+        $releaseWorkflowContent | Should -Not -Match 'Import-Module\s+AtlassianPSVII\.Standards\s+-RequiredVersion'
     }
 
     It 'keeps manifest prerelease metadata required by publish task' {
-        $manifestContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath 'AtlassianPS.Configuration/AtlassianPS.Configuration.psd1') -Raw
+        $manifestContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath 'AtlassianPSVII.Configuration/AtlassianPSVII.Configuration.psd1') -Raw
         $manifestContent | Should -Match "(?s)PrivateData\s*=\s*@\{.*PSData\s*=\s*@\{.*Prerelease\s*=\s*''"
     }
 
-    It 'reads AtlassianPS.Standards version from build.requirements in tool scripts' {
+    It 'reads AtlassianPSVII.Standards version from build.requirements in tool scripts' {
         $setupScriptContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath 'Tools/setup.ps1') -Raw
         $updateScriptContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath 'Tools/update.dependencies.ps1') -Raw
 
@@ -73,6 +73,6 @@ Describe 'AtlassianPS.Standards version consistency' -Tag Unit {
         $updateScriptContent | Should -Not -Match '\$standardsVersion\s*=\s*''[^'']+'''
         $updateScriptContent | Should -Match '-RequiredVersion\s+\$standardsVersion'
         $updateScriptContent | Should -Match '\$PSCmdlet\.ShouldProcess\('
-        $updateScriptContent | Should -Match 'AtlassianPS\.Standards\\Update-AtlassianPSDependencyReference'
+        $updateScriptContent | Should -Match 'AtlassianPSVII\.Standards\\Update-AtlassianPSVIIDependencyReference'
     }
 }

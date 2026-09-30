@@ -2,7 +2,7 @@
 
 <#
 .SYNOPSIS
-    Unit test template for AtlassianPS.Configuration public functions.
+    Unit test template for AtlassianPSVII.Configuration public functions.
 
 .DESCRIPTION
     Copy this file and rename it to:
@@ -23,12 +23,12 @@ Describe "%FUNCTION-NAME%" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
             #region Mocking
             # Example:
-            # Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-            # Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
+            # Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+            # Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
             #endregion Mocking
         }
 

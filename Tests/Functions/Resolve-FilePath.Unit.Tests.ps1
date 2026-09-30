@@ -7,7 +7,7 @@ Describe "Resolve-FilePath" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "resolves relative paths to full paths" {
             $folder = Join-Path -Path $TestDrive -ChildPath "files"
             $filePath = Join-Path -Path $folder -ChildPath "sample.txt"

@@ -18,8 +18,8 @@ If files disagree, `AGENTS.md` wins.
 
 ## Key Paths
 
-- Module code: `AtlassianPS.Configuration/Public/`, `AtlassianPS.Configuration/Private/`
-- Module bootstrap/schema wiring: `AtlassianPS.Configuration/AtlassianPS.Configuration.psm1`
-- Build script: `AtlassianPS.Configuration.build.ps1`
+- Module code: `AtlassianPSVII.Configuration/Public/`, `AtlassianPSVII.Configuration/Private/`
+- Module bootstrap/schema wiring: `AtlassianPSVII.Configuration/AtlassianPSVII.Configuration.psm1`
+- Build script: `AtlassianPSVII.Configuration.build.ps1`
 - Tests: `Tests/**/*.ps1`
 - Help docs: `docs/en-US/commands/*.md`, `docs/en-US/about_*.md`

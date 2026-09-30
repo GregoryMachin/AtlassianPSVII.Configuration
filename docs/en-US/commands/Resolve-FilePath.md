@@ -1,6 +1,6 @@
 ---
-external help file: AtlassianPS.Configuration-help.xml
-Module Name: AtlassianPS.Configuration
+external help file: AtlassianPSVII.Configuration-help.xml
+Module Name: AtlassianPSVII.Configuration
 online version: https://atlassianps.org/docs/AtlassianPS.Configuration/commands/Resolve-FilePath/
 locale: en-US
 schema: 2.0.0
@@ -28,7 +28,7 @@ Resolves relative and provider paths into a fully qualified file-system path.
 ### EXAMPLE 1
 
 ```powershell
-$folder = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath 'atlassianps-config-example'
+$folder = Join-Path -Path ([System.IO.Path]::GetTempPath()) -ChildPath 'atlassianpsvii-config-example'
 New-Item -Path $folder -ItemType Directory -Force | Out-Null
 $filePath = Join-Path -Path $folder -ChildPath 'sample.txt'
 Set-Content -LiteralPath $filePath -Value 'sample'

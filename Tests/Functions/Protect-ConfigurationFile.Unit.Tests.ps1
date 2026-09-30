@@ -7,7 +7,7 @@ Describe "Protect-ConfigurationFile" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "restricts a file without changing its content" {
             $path = Join-Path $TestDrive 'Configuration.psd1'
             Set-Content -LiteralPath $path -Value '@{}' -Encoding utf8BOM

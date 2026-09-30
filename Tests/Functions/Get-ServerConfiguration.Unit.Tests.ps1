@@ -7,10 +7,10 @@ Describe "Get-ServerConfiguration" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         #region Mocking
-        Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-        Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
+        Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+        Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
 
         Mock Get-Configuration {
             $script:Configuration["ServerList"]
@@ -49,13 +49,13 @@ Describe "Get-ServerConfiguration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -71,7 +71,7 @@ Describe "Get-ServerConfiguration" -Tag Unit {
                 $config = Get-ServerConfiguration -ErrorAction SilentlyContinue
 
                 $config | Should -HaveCount 2
-                $config | Should -BeOfType [AtlassianPS.ServerData]
+                $config | Should -BeOfType [AtlassianPSVII.ServerData]
                 $config.Name | Should -Be @("Google", "Google with Session")
                 $config.Uri | Should -Be @("https://google.com/", "https://google.com/")
                 $config.Type | Should -Be @("Jira", "Jira")
@@ -84,21 +84,21 @@ Describe "Get-ServerConfiguration" -Tag Unit {
                 $config = Get-ServerConfiguration -Name "Google" -ErrorAction SilentlyContinue
 
                 $config | Should -HaveCount 1
-                $config | Should -BeOfType [AtlassianPS.ServerData]
+                $config | Should -BeOfType [AtlassianPSVII.ServerData]
             }
 
             It "filters the results by multiple ServerNames" {
                 $config = Get-ServerConfiguration -Name "Google", "Google with Session" -ErrorAction SilentlyContinue
 
                 $config | Should -HaveCount 2
-                $config | Should -BeOfType [AtlassianPS.ServerData]
+                $config | Should -BeOfType [AtlassianPSVII.ServerData]
             }
 
             It "accepts names over the pipeline" {
                 $config = "Google", "Google with Session" | Get-ServerConfiguration -ErrorAction SilentlyContinue
 
                 $config | Should -HaveCount 2
-                $config | Should -BeOfType [AtlassianPS.ServerData]
+                $config | Should -BeOfType [AtlassianPSVII.ServerData]
             }
 
             It "accepts names over the pipeline from objects" {
@@ -108,7 +108,7 @@ Describe "Get-ServerConfiguration" -Tag Unit {
                 $config = $objects | Get-ServerConfiguration -ErrorAction SilentlyContinue
 
                 $config | Should -HaveCount 1
-                $config | Should -BeOfType [AtlassianPS.ServerData]
+                $config | Should -BeOfType [AtlassianPSVII.ServerData]
             }
 
             It "does not allow for wildcards when filtering by ServerName" {
@@ -127,14 +127,14 @@ Describe "Get-ServerConfiguration" -Tag Unit {
                 $config = Get-ServerConfiguration -Uri "https://google.com" -ErrorAction SilentlyContinue
 
                 $config | Should -HaveCount 2
-                $config | Should -BeOfType [AtlassianPS.ServerData]
+                $config | Should -BeOfType [AtlassianPSVII.ServerData]
             }
 
             It "is not case sensitive when filtering by Uri" {
                 $config = Get-ServerConfiguration -Uri "https://GOOGLE.com" -ErrorAction SilentlyContinue
 
                 $config | Should -HaveCount 2
-                $config | Should -BeOfType [AtlassianPS.ServerData]
+                $config | Should -BeOfType [AtlassianPSVII.ServerData]
             }
             It "allows for wildcards when filtering by Uri - but not any wildcard" {
                 # As -Uri parses the a string input, the behavior with wildcards is wonky

@@ -1,6 +1,6 @@
 ---
-external help file: AtlassianPS.Configuration-help.xml
-Module Name: AtlassianPS.Configuration
+external help file: AtlassianPSVII.Configuration-help.xml
+Module Name: AtlassianPSVII.Configuration
 online version: https://atlassianps.org/docs/AtlassianPS.Configuration/commands/Write-VerboseMessage/
 locale: en-US
 schema: 2.0.0
@@ -39,7 +39,7 @@ Writes a verbose message using the configured message style.
 ### EXAMPLE 2
 
 ```powershell
-Set-AtlassianConfiguration -Name Message -Value ([AtlassianPS.MessageStyle]::new(2, $false, $true, $false))
+Set-AtlassianConfiguration -Name Message -Value ([AtlassianPSVII.MessageStyle]::new(2, $false, $true, $false))
 Write-AtlassianVerboseMessage -Message 'Shared runtime diagnostic message.' -Verbose
 ```
 

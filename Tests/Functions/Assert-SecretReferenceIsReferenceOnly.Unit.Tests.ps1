@@ -7,7 +7,7 @@ Describe "Assert-SecretReferenceIsReferenceOnly" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         It "allows provider lookup metadata" {
             {
                 Assert-SecretReferenceIsReferenceOnly -SecretReference @{

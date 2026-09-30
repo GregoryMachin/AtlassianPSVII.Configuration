@@ -7,14 +7,14 @@ Describe "Set-ServerConfiguration" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
             #region Mocking
-            Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-            Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
-            Mock Save-Configuration -ModuleName "AtlassianPS.Configuration" {}
+            Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Save-Configuration -ModuleName "AtlassianPSVII.Configuration" {}
 
-            Mock Get-ServerConfiguration -ModuleName "AtlassianPS.Configuration" {
+            Mock Get-ServerConfiguration -ModuleName "AtlassianPSVII.Configuration" {
                 $script:Configuration["ServerList"]
             }
             #endregion Mocking
@@ -37,8 +37,8 @@ Describe "Set-ServerConfiguration" -Tag Unit {
                 $command | Should -HaveParameter "Uri" -Type [Uri]
             }
 
-            It "has a parameter 'Type' of type [AtlassianPS.ServerType]" {
-                $command | Should -HaveParameter "Type" -Type [AtlassianPS.ServerType]
+            It "has a parameter 'Type' of type [AtlassianPSVII.ServerType]" {
+                $command | Should -HaveParameter "Type" -Type [AtlassianPSVII.ServerType]
             }
 
             It "has a parameter 'Session' of type [Microsoft.PowerShell.Commands.WebRequestSession]" {
@@ -80,13 +80,13 @@ Describe "Set-ServerConfiguration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -112,14 +112,14 @@ Describe "Set-ServerConfiguration" -Tag Unit {
 
                 (Get-ServerConfiguration).Name | Should -Not -Contain "New Server"
                 (Get-ServerConfiguration | Where-Object Id -eq 1).Name | Should -Be "Google"
-                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 0 -Scope It
+                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPSVII.Configuration" -Exactly -Times 0 -Scope It
             }
 
             It "ignores Confirm when updating a server" {
                 Set-ServerConfiguration -Id 1 -Name "New Server" -Confirm:$false
 
                 (Get-ServerConfiguration | Where-Object Id -eq 1).Name | Should -Be "New Server"
-                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 1 -Scope It
+                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPSVII.Configuration" -Exactly -Times 1 -Scope It
             }
 
             It "accepts the Id over the pipeline" {
@@ -176,13 +176,13 @@ Describe "Set-ServerConfiguration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -218,7 +218,7 @@ Describe "Set-ServerConfiguration" -Tag Unit {
                 (Get-ServerConfiguration | Where-Object Id -eq 1).Type | Should -Be "Bitbucket"
             }
 
-            It "only allowed AtlassianPS server types" {
+            It "only allowed AtlassianPSVII server types" {
                 Get-ServerConfiguration | Should -HaveCount 2
 
                 { Set-ServerConfiguration -Id 1 -Name "Bitbucket" -Uri "https://atlassianps.org" -Type Bitbucket } | Should -Not -Throw

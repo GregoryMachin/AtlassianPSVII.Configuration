@@ -7,12 +7,12 @@ Describe "Set-Configuration" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         BeforeEach {
             #region Mocking
-            Mock Write-DebugMessage -ModuleName "AtlassianPS.Configuration" {}
-            Mock Write-Verbose -ModuleName "AtlassianPS.Configuration" {}
-            Mock Save-Configuration -ModuleName "AtlassianPS.Configuration" {}
+            Mock Write-DebugMessage -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Write-Verbose -ModuleName "AtlassianPSVII.Configuration" {}
+            Mock Save-Configuration -ModuleName "AtlassianPSVII.Configuration" {}
 
             Mock Get-Configuration {
                 $tempConfig = $script:Configuration.Clone()
@@ -64,13 +64,13 @@ Describe "Set-Configuration" -Tag Unit {
                     Bar        = 42
                     Baz        = (Get-Date)
                     ServerList = @(
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id   = 1
                             Name = "Google"
                             Uri  = "https://google.com"
                             Type = "Jira"
                         }
-                        [AtlassianPS.ServerData]@{
+                        [AtlassianPSVII.ServerData]@{
                             Id      = 2
                             Name    = "Google with Session"
                             Uri     = "https://google.com"
@@ -106,7 +106,7 @@ Describe "Set-Configuration" -Tag Unit {
                 Set-Configuration -Name "Foo" -Value "New Value" -WhatIf
 
                 (Get-Configuration | Where-Object Name -eq "Foo").Value | Should -Be "lorem ipsum"
-                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPS.Configuration" -Exactly -Times 0 -Scope It
+                Should -Invoke "Save-Configuration" -ModuleName "AtlassianPSVII.Configuration" -Exactly -Times 0 -Scope It
             }
 
             It "appends a value to an entry" {
@@ -133,7 +133,7 @@ Describe "Set-Configuration" -Tag Unit {
             }
 
             It "allows the Message configuration key to be changed" {
-                $messageStyle = [AtlassianPS.MessageStyle]::new(2, $false, $true, $false)
+                $messageStyle = [AtlassianPSVII.MessageStyle]::new(2, $false, $true, $false)
 
                 Set-Configuration -Name "Message" -Value $messageStyle
 

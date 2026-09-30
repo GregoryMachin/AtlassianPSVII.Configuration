@@ -7,7 +7,7 @@ Describe "ConvertTo-Uri" -Tag Unit {
         Import-Module $script:moduleToTest
     }
 
-    InModuleScope "AtlassianPS.Configuration" {
+    InModuleScope "AtlassianPSVII.Configuration" {
         Context "normalization" {
             It "normalizes <Name>" -TestCases @(
                 @{

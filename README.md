@@ -1,19 +1,19 @@
 ---
 layout: module
-permalink: /module/AtlassianPS.Configuration/
+permalink: /module/AtlassianPSVII.Configuration/
 ---
-# [AtlassianPS.Configuration](https://atlassianps.org/module/AtlassianPS.Configuration)
+# [AtlassianPSVII.Configuration](https://atlassianps.org/module/AtlassianPS.Configuration)
 
 [![GitHub release](https://img.shields.io/github/release/AtlassianPS/AtlassianPS.Configuration.svg?style=for-the-badge)](https://github.com/AtlassianPS/AtlassianPS.Configuration/releases/latest)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/AtlassianPS/AtlassianPS.Configuration/ci.yml?style=for-the-badge)](https://github.com/AtlassianPS/AtlassianPS.Configuration/actions/workflows/ci.yml)
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/AtlassianPS.Configuration.svg?style=for-the-badge)](https://www.powershellgallery.com/packages/AtlassianPS.Configuration)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)
 
-AtlassianPS.Configuration is a module that offers a common set of tools to the [AtlassianPS] products to handle user-specific configuration.
+AtlassianPSVII.Configuration is a module that offers a common set of tools to the [AtlassianPSVII] products to handle user-specific configuration.
 
-It also provides a shared runtime helper surface for dependent modules. Runtime helpers are intentionally separated from configuration cmdlets under `AtlassianPS.Configuration/Public/SharedRuntime/` (with shared internals under `Private/SharedRuntime/`) so helper evolution stays isolated from core configuration behavior.
+It also provides a shared runtime helper surface for dependent modules. Runtime helpers are intentionally separated from configuration cmdlets under `AtlassianPSVII.Configuration/Public/SharedRuntime/` (with shared internals under `Private/SharedRuntime/`) so helper evolution stays isolated from core configuration behavior.
 
-Join the conversation on [![SlackLogo][] AtlassianPS.Slack.com](https://atlassianps.org/slack)
+Join the conversation on [![SlackLogo][] AtlassianPSVII.Slack.com](https://atlassianps.org/slack)
 
 [SlackLogo]: https://atlassianps.org/assets/img/Slack_Mark_Web_28x28.png
 <!--more-->
@@ -25,41 +25,41 @@ Join the conversation on [![SlackLogo][] AtlassianPS.Slack.com](https://atlassia
 ### Installation
 
 > This module does not need to be installed manually.  
-> [AtlassianPS] products which use this module will install it automatically using the [PowerShell Gallery].
+> [AtlassianPSVII] products which use this module will install it automatically using the [PowerShell Gallery].
 
 ### Usage
 
-> This example uses [ConfluencePS](https://atlassianps.org/docs/ConfluencePS) for illustration.  
+> This example uses [ConfluencePSVII](https://atlassianps.org/docs/ConfluencePS) for illustration.  
 > This example uses [splatting](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting).
 
 ```powershell
-Import-Module ConfluencePS   # AtlassianPS.Configuration is imported automatically
+Import-Module ConfluencePSVII   # AtlassianPSVII.Configuration is imported automatically
 
 $serverData = @{
     # BaseURL of the server
     Uri = "https://powershell.atlassian.net/wiki"
     # Name with which you want to address this server
-    ServerName = "AtlassianPS - wiki"
+    ServerName = "AtlassianPSVII - wiki"
     # Type of the Atlassian product
     Type = "Confluence"
 }
 Add-AtlassianServerConfiguration @serverData
 
-Get-ConfluenceSpace -Server "AtlassianPS - wiki"
+Get-ConfluenceSpace -Server "AtlassianPSVII - wiki"
 ```
 
 You can find the full documentation on our [homepage](https://atlassianps.org/docs/AtlassianPS.Configuration) and in the console.
 
 ```powershell
 # Review the help at any time!
-Get-Help about_AtlassianPS.Configuration
-Get-Command -Module AtlassianPS.Configuration
+Get-Help about_AtlassianPSVII.Configuration
+Get-Command -Module AtlassianPSVII.Configuration
 Get-Help Get-AtlassianServerConfiguration -Full # or any other command
 ```
 
 ### Contribute
 
-Want to contribute to AtlassianPS? Great!
+Want to contribute to AtlassianPSVII? Great!
 We appreciate [everyone](https://atlassianps.org/#people) who invests their time to make our modules the best they can be.
 
 Check out our guidelines on [Contributing] to our modules and documentation.
@@ -92,7 +92,7 @@ Hopefully this is obvious, but:
 > This is an open source project (under the [MIT license]), and all contributors are volunteers. All commands are executed at your own risk. Please have good backups before you start, because you can delete a lot of stuff if you're not careful.
 
 <!-- reference-style links -->
-  [AtlassianPS]: https://atlassianps.org/
+  [AtlassianPSVII]: https://atlassianps.org/
   [PowerShell Gallery]: https://www.powershellgallery.com/
   [Source Code]: https://github.com/AtlassianPS/AtlassianPS.Configuration
   [Latest Release]: https://github.com/AtlassianPS/AtlassianPS.Configuration/releases/latest
