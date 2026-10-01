@@ -1,6 +1,4 @@
 ---
-layout: documentation
-permalink: /docs/AtlassianPS.Configuration/enumerations/
 hide: true
 ---
 # AtlassianPSVII.Configuration enumerations

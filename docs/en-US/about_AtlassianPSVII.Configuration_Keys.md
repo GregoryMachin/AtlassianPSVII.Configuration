@@ -1,9 +1,7 @@
 ---
 Module Name: AtlassianPSVII.Configuration
-online version: https://atlassianps.org/docs/AtlassianPS.Configuration/about/implemented-keys.html
+online version: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/docs/en-US/about_AtlassianPSVII.Configuration_Keys.md
 locale: en-US
-layout: documentation
-permalink: /docs/AtlassianPS.Configuration/about/implemented-keys.html
 ---
 # AtlassianPSVII.Configuration Implemented Keys
 
@@ -27,7 +25,7 @@ auto-detection when explicitly set.
 `SecretReference` stores provider lookup metadata only. Secret values must remain outside `Configuration.psd1`.
 
 > ServerData objects are describe here:  
-> <https://atlassianps.org/docs/AtlassianPS.Configuration/classes/AtlassianPS.ServerData/>
+> <https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/docs/en-US/classes/AtlassianPSVII.ServerData.md>
 
 ```yaml
 DataType: AtlassianPSVII.ServerData

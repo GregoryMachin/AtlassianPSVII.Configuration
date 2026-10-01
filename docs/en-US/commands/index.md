@@ -1,6 +1,4 @@
 ---
-layout: documentation
-permalink: /docs/AtlassianPS.Configuration/commands/
 hide: true
 ---
 # AtlassianPSVII.Configuration commands

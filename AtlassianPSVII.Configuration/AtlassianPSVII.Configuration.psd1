@@ -2,7 +2,7 @@
     RootModule           = 'AtlassianPSVII.Configuration.psm1'
     ModuleVersion        = '1.0.0'
     GUID                 = '3f17d2ff-3fd0-46a8-bf56-35300ba2d24e'
-    Author               = 'Lipkau'
+    Author               = 'Gregory Machin'
     CompanyName          = 'AtlassianPSVII'
     Copyright            = '(c) 2018 AtlassianPS; (c) 2026 Gregory Machin. MIT License.'
     Description          = "A module for modules - AtlasianPS modules use this to handle the user's configuration"
@@ -47,11 +47,9 @@
             )
             LicenseUri   = 'https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/LICENSE'
             ProjectUri   = 'https://github.com/GregoryMachin/AtlassianPSVII.Configuration'
-            IconUri      = 'https://atlassianps.org/assets/img/AtlassianPS.Configuration.png'
             ReleaseNotes = 'https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/CHANGELOG.md'
             Prerelease   = ''
         }
     }
-    HelpInfoURI          = 'https://atlassianps.org/docs/AtlassianPS.Configuration/'
     DefaultCommandPrefix = 'Atlassian'
 }

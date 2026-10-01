@@ -1,9 +1,7 @@
 ---
 Module Name: AtlassianPSVII.Configuration
-online version: https://atlassianps.org/docs/AtlassianPS.Configuration/
+online version: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/docs/en-US/about_AtlassianPSVII.Configuration.md
 locale: en-US
-layout: documentation
-permalink: /docs/AtlassianPS.Configuration/
 hide: true
 ---
 # AtlassianPSVII.Configuration
@@ -13,7 +11,7 @@ hide: true
 # SHORT DESCRIPTION
 
 AtlassianPSVII.Configuration is a module that offers a common set of tools to the
-<https://AtlassianPS.org> products to handle user-specific configuration.
+AtlassianPSVII products (JiraPSVII, JiraAgilePSVII, ConfluencePSVII) to handle user-specific configuration.
 
 # LONG DESCRIPTION
 
@@ -53,7 +51,7 @@ being imported.
 
 # EXAMPLES
 
-> This example uses [ConfluencePSVII](https://atlassianps.org/docs/ConfluencePS) for illustration.  
+> This example uses [ConfluencePSVII](https://github.com/GregoryMachin/ConfluencePSVII/tree/master/docs/en-US) for illustration.  
 > This example uses [splatting](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting).
 
 ```powershell
@@ -74,9 +72,9 @@ Get-ConfluenceSpace -Server "AtlassianPSVII - wiki"
 
 # NOTE
 
-This project is run by the volunteer organization AtlassianPSVII.
+This project is a fork of AtlassianPS.Configuration by the AtlassianPS volunteer organization, maintained by Gregory Machin.
 We are always interested in hearing from new users!
-Find us on GitHub or Slack, and let us know what you think.
+Open an issue on GitHub and let us know what you think.
 
 # SEE ALSO
 
@@ -85,10 +83,6 @@ Find us on GitHub or Slack, and let us know what you think.
 [Classes index](/docs/AtlassianPS.Configuration/classes/)
 
 [Enumerations index](/docs/AtlassianPS.Configuration/enumerations/)
-
-[AtlassianPSVII org](https://atlassianps.org)
-
-[AtlassianPSVII Slack team](https://atlassianps.org/slack)
 
 # KEYWORDS
 

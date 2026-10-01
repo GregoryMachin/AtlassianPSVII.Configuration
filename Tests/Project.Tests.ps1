@@ -106,9 +106,9 @@ Describe "General project validation" -Tag Unit {
             Test-Path "$env:BHProjectPath/README.md" | Should -BeTrue
         }
 
-        It "defines the homepage frontmatter in the README" {
-            "$env:BHProjectPath/README.md" | Should -FileContentMatchExactly "layout: module"
-            "$env:BHProjectPath/README.md" | Should -FileContentMatchExactly "permalink: /module/$env:BHProjectName/"
+        It "has no atlassianps.org website front matter in the README" {
+            "$env:BHProjectPath/README.md" | Should -Not -FileContentMatch '^layout:'
+            "$env:BHProjectPath/README.md" | Should -Not -FileContentMatch '^permalink:'
         }
 
         It "uses the MIT license" {

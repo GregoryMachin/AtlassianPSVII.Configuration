@@ -6,8 +6,6 @@ BeforeDiscovery {
     $script:moduleToTest = Initialize-TestEnvironment
     $script:projectRoot = Resolve-ProjectRoot
     $script:moduleName = $env:BHProjectName
-    # The docs are still hosted on the upstream atlassianps.org site, under the upstream module name.
-    $script:docsSiteName = $script:moduleName -replace 'PSVII', 'PS'
     $script:modulePrefix = (Import-PowerShellDataFile -Path $env:BHManifestToTest).DefaultCommandPrefix
 
     ${/} = [regex]::Escape([System.IO.Path]::DirectorySeparatorChar)
@@ -93,10 +91,10 @@ Describe "Help tests" -Tag "Documentation", "Build" {
             $markdownFile | Should -Not -FileContentMatch '\{\{.*?\}\}'
         }
 
-        It "defines the frontmatter for the homepage" {
+        It "has no atlassianps.org website front matter" {
             $markdownFile | Should -FileContentMatch "Module Name: $moduleName"
-            $markdownFile | Should -FileContentMatchExactly "layout: documentation"
-            $markdownFile | Should -FileContentMatch "permalink: /docs/$docsSiteName*"
+            $markdownFile | Should -Not -FileContentMatch '^layout:'
+            $markdownFile | Should -Not -FileContentMatch '^permalink:'
         }
     }
 
@@ -142,15 +140,15 @@ Describe "Help tests" -Tag "Documentation", "Build" {
                 }
 
                 It "has a valid online version" {
-                    $pattern = [regex]::Escape("https://atlassianps.org/docs/$docsSiteName/commands/$documentationName/")
+                    $pattern = [regex]::Escape("https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/docs/en-US/commands/$documentationName.md")
                     $markdownFile | Should -FileContentMatch $pattern
                 }
 
-                It "defines the frontmatter for the homepage" {
+                It "has no atlassianps.org website front matter" {
                     $markdownFile | Should -Not -BeNullOrEmpty
                     $markdownFile | Should -FileContentMatch "Module Name: $moduleName"
-                    $markdownFile | Should -FileContentMatchExactly "layout: documentation"
-                    $markdownFile | Should -FileContentMatch "permalink: /docs/$docsSiteName/commands/$documentationName/"
+                    $markdownFile | Should -Not -FileContentMatch '^layout:'
+                    $markdownFile | Should -Not -FileContentMatch '^permalink:'
                 }
             }
 
@@ -193,14 +191,14 @@ Describe "Help tests" -Tag "Documentation", "Build" {
                     $onlineLinkValue | Should -Not -BeNullOrEmpty
                     [Uri]$onlineLink = $onlineLinkValue[0]
 
-                    $onlineLink.Authority | Should -Be "atlassianps.org"
+                    $onlineLink.Authority | Should -Be "github.com"
                     $onlineLink.Scheme | Should -Be "https"
-                    $onlineLink.PathAndQuery | Should -Be "/docs/$docsSiteName/commands/$documentationName/"
+                    $onlineLink.PathAndQuery | Should -Be "/GregoryMachin/AtlassianPSVII.Configuration/blob/master/docs/en-US/commands/$documentationName.md"
                 }
 
                 It "has a valid HelpUri" -Skip { #TODO: Fix HelpUri generation
                     $command.HelpUri | Should -Not -BeNullOrEmpty
-                    $pattern = [regex]::Escape("https://atlassianps.org/docs/$docsSiteName/commands/$documentationName")
+                    $pattern = [regex]::Escape("https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/docs/en-US/commands/$documentationName.md")
                     $command.HelpUri | Should -Match $pattern
                 }
 

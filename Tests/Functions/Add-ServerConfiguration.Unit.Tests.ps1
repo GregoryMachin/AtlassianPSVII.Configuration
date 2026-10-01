@@ -98,7 +98,7 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                 Get-ServerConfiguration | Should -HaveCount 2
                 (Get-ServerConfiguration).Name | Should -Not -Contain "New Server"
 
-                Add-ServerConfiguration -Name "New Server" -Uri "https://atlassianps.org" -Type Jira
+                Add-ServerConfiguration -Name "New Server" -Uri "https://jira.example.com" -Type Jira
 
                 Get-ServerConfiguration | Should -HaveCount 3
                 (Get-ServerConfiguration).Name | Should -Contain "New Server"
@@ -136,7 +136,7 @@ Describe "Add-ServerConfiguration" -Tag Unit {
             }
 
             It "does not add or save a server when WhatIf is used" {
-                Add-ServerConfiguration -Name "New Server" -Uri "https://atlassianps.org" -Type Jira -WhatIf
+                Add-ServerConfiguration -Name "New Server" -Uri "https://jira.example.com" -Type Jira -WhatIf
 
                 Get-ServerConfiguration | Should -HaveCount 2
                 (Get-ServerConfiguration).Name | Should -Not -Contain "New Server"
@@ -145,12 +145,12 @@ Describe "Add-ServerConfiguration" -Tag Unit {
 
             It "uses the [Uri]::Authority as default for server's name" {
                 Get-ServerConfiguration | Should -HaveCount 2
-                (Get-ServerConfiguration).Name | Should -Not -Contain "atlassianps.org"
+                (Get-ServerConfiguration).Name | Should -Not -Contain "jira.example.com"
 
-                Add-ServerConfiguration -Uri "https://atlassianps.org" -Type Jira
+                Add-ServerConfiguration -Uri "https://jira.example.com" -Type Jira
 
                 Get-ServerConfiguration | Should -HaveCount 3
-                (Get-ServerConfiguration).Name | Should -Contain "atlassianps.org"
+                (Get-ServerConfiguration).Name | Should -Contain "jira.example.com"
             }
 
             It "adds a new server entry from an existing over the pipeline" {
@@ -171,11 +171,11 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                 Get-ServerConfiguration | Should -HaveCount 2
                 (Get-ServerConfiguration).Name | Should -Not -Contain "New Server"
 
-                "https://atlassianps.org" | Add-ServerConfiguration -Type Jira
+                "https://jira.example.com" | Add-ServerConfiguration -Type Jira
 
                 Get-ServerConfiguration | Should -HaveCount 3
-                (Get-ServerConfiguration).Name | Should -Contain "atlassianps.org"
-                (Get-ServerConfiguration)[-1].Uri | Should -Be "https://atlassianps.org/"
+                (Get-ServerConfiguration).Name | Should -Contain "jira.example.com"
+                (Get-ServerConfiguration)[-1].Uri | Should -Be "https://jira.example.com/"
                 (Get-ServerConfiguration)[-1].Type | Should -Be "JIRA"
             }
 
@@ -184,7 +184,7 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                 (Get-ServerConfiguration).Id | Should -Be @(1, 2)
 
                 1..8 | ForEach-Object {
-                    Add-ServerConfiguration -Name "New Server $_" -Uri "https://atlassianps.org" -Type Jira
+                    Add-ServerConfiguration -Name "New Server $_" -Uri "https://jira.example.com" -Type Jira
                 }
 
                 Get-ServerConfiguration | Should -HaveCount 10
@@ -193,8 +193,8 @@ Describe "Add-ServerConfiguration" -Tag Unit {
 
             It "adds piped servers with unique names and IDs" {
                 @(
-                    [PSCustomObject]@{ Name = "New Server 1"; Uri = "https://one.atlassianps.org"; Type = "Jira" }
-                    [PSCustomObject]@{ Name = "New Server 2"; Uri = "https://two.atlassianps.org"; Type = "Jira" }
+                    [PSCustomObject]@{ Name = "New Server 1"; Uri = "https://one.jira.example.com"; Type = "Jira" }
+                    [PSCustomObject]@{ Name = "New Server 2"; Uri = "https://two.jira.example.com"; Type = "Jira" }
                 ) | Add-ServerConfiguration
 
                 Get-ServerConfiguration | Should -HaveCount 4
@@ -205,8 +205,8 @@ Describe "Add-ServerConfiguration" -Tag Unit {
 
             It "rejects duplicate names within one pipeline invocation" {
                 @(
-                    [PSCustomObject]@{ Name = "New Server"; Uri = "https://one.atlassianps.org"; Type = "Jira" }
-                    [PSCustomObject]@{ Name = "New Server"; Uri = "https://two.atlassianps.org"; Type = "Jira" }
+                    [PSCustomObject]@{ Name = "New Server"; Uri = "https://one.jira.example.com"; Type = "Jira" }
+                    [PSCustomObject]@{ Name = "New Server"; Uri = "https://two.jira.example.com"; Type = "Jira" }
                 ) | Add-ServerConfiguration -ErrorAction SilentlyContinue
 
                 Get-ServerConfiguration | Should -HaveCount 3
@@ -216,18 +216,18 @@ Describe "Add-ServerConfiguration" -Tag Unit {
             It "writes an error if the Name already exists in the collection" {
                 Get-ServerConfiguration | Should -HaveCount 2
                 (Get-ServerConfiguration).Name | Should -Contain "Google"
-                (Get-ServerConfiguration).Uri | Should -Not -Contain "https://atlassianps.org/"
+                (Get-ServerConfiguration).Uri | Should -Not -Contain "https://jira.example.com/"
 
                 {
-                    Add-ServerConfiguration -Name "Google" -Uri "https://atlassianps.org/" -Type Jira -ErrorAction Stop
+                    Add-ServerConfiguration -Name "Google" -Uri "https://jira.example.com/" -Type Jira -ErrorAction Stop
                 } | Should -Throw
                 try {
-                    Add-ServerConfiguration -Name "Google" -Uri "https://atlassianps.org/" -Type Jira -ErrorAction Stop
+                    Add-ServerConfiguration -Name "Google" -Uri "https://jira.example.com/" -Type Jira -ErrorAction Stop
                 }
                 catch {
                     $_.Exception.Message | Should -Be "An entry with name [Google] already exists"
                 }
-                { Add-ServerConfiguration -Name "Google" -Uri "https://atlassianps.org/" -Type Jira -ErrorAction SilentlyContinue } | Should -Not -Throw
+                { Add-ServerConfiguration -Name "Google" -Uri "https://jira.example.com/" -Type Jira -ErrorAction SilentlyContinue } | Should -Not -Throw
 
                 Get-ServerConfiguration | Should -HaveCount 2
             }
@@ -261,25 +261,25 @@ Describe "Add-ServerConfiguration" -Tag Unit {
 
             It "adds a server with the minimum set of parameters" {
                 Get-ServerConfiguration | Should -HaveCount 2
-                (Get-ServerConfiguration).Name | Should -Not -Contain "atlassianps.org"
+                (Get-ServerConfiguration).Name | Should -Not -Contain "jira.example.com"
 
-                Add-ServerConfiguration -Uri "https://atlassianps.org" -Type Jira
+                Add-ServerConfiguration -Uri "https://jira.example.com" -Type Jira
 
                 Get-ServerConfiguration | Should -HaveCount 3
-                (Get-ServerConfiguration).Name | Should -Contain "atlassianps.org"
+                (Get-ServerConfiguration).Name | Should -Contain "jira.example.com"
             }
 
             It "only allowed AtlassianPSVII server types" {
                 Get-ServerConfiguration | Should -HaveCount 2
 
-                { Add-ServerConfiguration -Name "Bitbucket" -Uri "https://atlassianps.org" -Type Bitbucket } | Should -Not -Throw
-                { Add-ServerConfiguration -Name "Confluence" -Uri "https://atlassianps.org" -Type Confluence } | Should -Not -Throw
-                { Add-ServerConfiguration -Name "Jira" -Uri "https://atlassianps.org" -Type Jira } | Should -Not -Throw
+                { Add-ServerConfiguration -Name "Bitbucket" -Uri "https://jira.example.com" -Type Bitbucket } | Should -Not -Throw
+                { Add-ServerConfiguration -Name "Confluence" -Uri "https://jira.example.com" -Type Confluence } | Should -Not -Throw
+                { Add-ServerConfiguration -Name "Jira" -Uri "https://jira.example.com" -Type Jira } | Should -Not -Throw
                 # Hipchat is not yet supported
-                { Add-ServerConfiguration -Name "Hipchat" -Uri "https://atlassianps.org" -Type Hipchat } | Should -Throw
+                { Add-ServerConfiguration -Name "Hipchat" -Uri "https://jira.example.com" -Type Hipchat } | Should -Throw
 
-                { Add-ServerConfiguration -Name "None" -Uri "https://atlassianps.org" -Type "" } | Should -Throw
-                { Add-ServerConfiguration -Name "Github" -Uri "https://atlassianps.org" -Type Github } | Should -Throw
+                { Add-ServerConfiguration -Name "None" -Uri "https://jira.example.com" -Type "" } | Should -Throw
+                { Add-ServerConfiguration -Name "Github" -Uri "https://jira.example.com" -Type Github } | Should -Throw
 
                 { Add-ServerConfiguration -Name "Relative" -Uri "relative/path" -Type Jira } | Should -Throw
 
@@ -290,7 +290,7 @@ Describe "Add-ServerConfiguration" -Tag Unit {
                 Get-ServerConfiguration | Should -HaveCount 2
                 (Get-ServerConfiguration).Name | Should -Not -Contain "New Server"
 
-                Add-ServerConfiguration -Name "New Server" -Uri "https://atlassianps.org" -Type Jira
+                Add-ServerConfiguration -Name "New Server" -Uri "https://jira.example.com" -Type Jira
 
                 Get-ServerConfiguration | Should -HaveCount 3
                 (Get-ServerConfiguration).Name | Should -Contain "New Server"
@@ -302,7 +302,7 @@ Describe "Add-ServerConfiguration" -Tag Unit {
 
                 $webSession = New-Object -TypeName Microsoft.PowerShell.Commands.WebRequestSession
                 $webSession.UserAgent = "Test Value"
-                Add-ServerConfiguration -Name "New Server" -Uri "https://atlassianps.org" -Type Jira -Session $webSession
+                Add-ServerConfiguration -Name "New Server" -Uri "https://jira.example.com" -Type Jira -Session $webSession
 
                 Get-ServerConfiguration | Should -HaveCount 3
                 (Get-ServerConfiguration).Name | Should -Contain "New Server"
@@ -316,7 +316,7 @@ Describe "Add-ServerConfiguration" -Tag Unit {
 
                 $webSession = New-Object -TypeName Microsoft.PowerShell.Commands.WebRequestSession
                 $webSession.UserAgent = "Test Value"
-                Add-ServerConfiguration -Name "New Server" -Uri "https://atlassianps.org" -Type Jira -Session $webSession -Headers @{
+                Add-ServerConfiguration -Name "New Server" -Uri "https://jira.example.com" -Type Jira -Session $webSession -Headers @{
                     Authorization = "Basic ABCDEF"
                 }
 
@@ -330,9 +330,9 @@ Describe "Add-ServerConfiguration" -Tag Unit {
             }
 
             It "rejects invalid deployment metadata values" {
-                { Add-ServerConfiguration -Name "Invalid Product" -Uri "https://atlassianps.org" -Type Jira -Product FishEye } | Should -Throw
-                { Add-ServerConfiguration -Name "Invalid Deployment" -Uri "https://atlassianps.org" -Type Jira -DeploymentType Hosted } | Should -Throw
-                { Add-ServerConfiguration -Name "Invalid Auth" -Uri "https://atlassianps.org" -Type Jira -AuthenticationType Kerberos } | Should -Throw
+                { Add-ServerConfiguration -Name "Invalid Product" -Uri "https://jira.example.com" -Type Jira -Product FishEye } | Should -Throw
+                { Add-ServerConfiguration -Name "Invalid Deployment" -Uri "https://jira.example.com" -Type Jira -DeploymentType Hosted } | Should -Throw
+                { Add-ServerConfiguration -Name "Invalid Auth" -Uri "https://jira.example.com" -Type Jira -AuthenticationType Kerberos } | Should -Throw
             }
         }
     }

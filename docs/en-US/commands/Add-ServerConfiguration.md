@@ -1,11 +1,9 @@
 ---
 external help file: AtlassianPSVII.Configuration-help.xml
 Module Name: AtlassianPSVII.Configuration
-online version: https://atlassianps.org/docs/AtlassianPS.Configuration/commands/Add-ServerConfiguration/
+online version: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/docs/en-US/commands/Add-ServerConfiguration.md
 locale: en-US
 schema: 2.0.0
-layout: documentation
-permalink: /docs/AtlassianPS.Configuration/commands/Add-ServerConfiguration/
 ---
 # Add-ServerConfiguration
 

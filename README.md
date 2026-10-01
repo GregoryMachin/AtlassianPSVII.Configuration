@@ -1,22 +1,15 @@
-
-> **Fork notice:** AtlassianPSVII.Configuration is a fork of [AtlassianPS.Configuration](https://github.com/AtlassianPS/AtlassianPS.Configuration) by the [AtlassianPS](https://github.com/AtlassianPS) team (MIT License), renamed and maintained by Gregory Machin. "VII" is only part of the name: it supports Windows PowerShell 5.1 and PowerShell 7.4+, and can be loaded side by side with the upstream module.
----
-layout: module
-permalink: /module/AtlassianPSVII.Configuration/
----
-# [AtlassianPSVII.Configuration](https://atlassianps.org/module/AtlassianPS.Configuration)
+# [AtlassianPSVII.Configuration](https://github.com/GregoryMachin/AtlassianPSVII.Configuration)
 
 [![GitHub release](https://img.shields.io/github/release/GregoryMachin/AtlassianPSVII.Configuration.svg?style=for-the-badge)](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/releases/latest)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/GregoryMachin/AtlassianPSVII.Configuration/ci.yml?style=for-the-badge)](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/actions/workflows/ci.yml)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)
 
-AtlassianPSVII.Configuration is a module that offers a common set of tools to the [AtlassianPSVII] products to handle user-specific configuration.
+> **Fork notice:** AtlassianPSVII.Configuration is a fork of [AtlassianPS.Configuration](https://github.com/AtlassianPS/AtlassianPS.Configuration) by the [AtlassianPS](https://github.com/AtlassianPS) team (MIT License), renamed and maintained by Gregory Machin. "VII" is only part of the name: it supports Windows PowerShell 5.1 and PowerShell 7.4+, and can be loaded side by side with the upstream module.
+
+AtlassianPSVII.Configuration is a module that offers a common set of tools to the AtlassianPSVII products to handle user-specific configuration.
 
 It also provides a shared runtime helper surface for dependent modules. Runtime helpers are intentionally separated from configuration cmdlets under `AtlassianPSVII.Configuration/Public/SharedRuntime/` (with shared internals under `Private/SharedRuntime/`) so helper evolution stays isolated from core configuration behavior.
 
-Join the conversation on [![SlackLogo][] AtlassianPSVII.Slack.com](https://atlassianps.org/slack)
-
-[SlackLogo]: https://atlassianps.org/assets/img/Slack_Mark_Web_28x28.png
 <!--more-->
 
 ---
@@ -37,7 +30,7 @@ For the built release copy (merged module and compiled help) run `./Tools/setup.
 
 ### Usage
 
-> This example uses [ConfluencePSVII](https://atlassianps.org/docs/ConfluencePS) for illustration.  
+> This example uses [ConfluencePSVII](https://github.com/GregoryMachin/ConfluencePSVII/tree/master/docs/en-US) for illustration.  
 > This example uses [splatting](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting).
 
 ```powershell
@@ -56,7 +49,7 @@ Add-AtlassianServerConfiguration @serverData
 Get-ConfluenceSpace -Server "AtlassianPSVII - wiki"
 ```
 
-You can find the full documentation on our [homepage](https://atlassianps.org/docs/AtlassianPS.Configuration) and in the console.
+The full documentation is in the [docs folder](https://github.com/GregoryMachin/AtlassianPSVII.Configuration/tree/master/docs/en-US) and in the console.
 
 ```powershell
 # Review the help at any time!
@@ -67,8 +60,8 @@ Get-Help Get-AtlassianServerConfiguration -Full # or any other command
 
 ### Contribute
 
-Want to contribute to AtlassianPSVII? Great!
-We appreciate [everyone](https://atlassianps.org/#people) who invests their time to make our modules the best they can be.
+Want to contribute? Great!
+Contributions are welcome: open an issue or a pull request in this repository.
 
 Check out our guidelines on [Contributing] to our modules and documentation.
 
@@ -83,7 +76,7 @@ Check out our guidelines on [Contributing] to our modules and documentation.
 
 ## Acknowledgements
 
-* Thanks to everyone ([Our Contributors](https://atlassianps.org/#people)) that helped with this module
+* This module is a fork of [AtlassianPS.Configuration](https://github.com/AtlassianPS/AtlassianPS.Configuration); thanks to its original authors and contributors.
 
 ## Useful links
 
@@ -100,13 +93,12 @@ Hopefully this is obvious, but:
 > This is an open source project (under the [MIT license]), and all contributors are volunteers. All commands are executed at your own risk. Please have good backups before you start, because you can delete a lot of stuff if you're not careful.
 
 <!-- reference-style links -->
-  [AtlassianPSVII]: https://atlassianps.org/
   [PowerShell Gallery]: https://www.powershellgallery.com/
   [Source Code]: https://github.com/GregoryMachin/AtlassianPSVII.Configuration
   [Latest Release]: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/releases/latest
   [Submit an Issue]: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/issues/new
   [MIT license]: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/LICENSE
-  [Contributing]: https://atlassianps.org/docs/Contributing/
+  [Contributing]: .github/CONTRIBUTING.md
 
 <!-- [//]: # (Sweet online markdown editor at http://dillinger.io) -->
 <!-- [//]: # ("GitHub Flavored Markdown" https://help.github.com/articles/github-flavored-markdown/) -->

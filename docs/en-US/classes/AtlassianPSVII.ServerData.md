@@ -1,7 +1,5 @@
 ---
-layout: documentation
 Module Name: AtlassianPSVII.Configuration
-permalink: /docs/AtlassianPS.Configuration/classes/AtlassianPSVII.ServerData/
 ---
 # AtlassianPSVII.ServerData
 

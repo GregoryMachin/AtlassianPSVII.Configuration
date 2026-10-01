@@ -1,11 +1,9 @@
 ---
 external help file: AtlassianPSVII.Configuration-help.xml
 Module Name: AtlassianPSVII.Configuration
-online version: https://atlassianps.org/docs/AtlassianPS.Configuration/commands/Resolve-FilePath/
+online version: https://github.com/GregoryMachin/AtlassianPSVII.Configuration/blob/master/docs/en-US/commands/Resolve-FilePath.md
 locale: en-US
 schema: 2.0.0
-layout: documentation
-permalink: /docs/AtlassianPS.Configuration/commands/Resolve-FilePath/
 ---
 # Resolve-FilePath
 

@@ -197,9 +197,9 @@ Describe "Set-ServerConfiguration" -Tag Unit {
             It "can change the Name" {
                 (Get-ServerConfiguration | Where-Object Id -eq 1).Name | Should -Be "Google"
 
-                Set-ServerConfiguration -Id 1 -Name "https://atlassianps.org"
+                Set-ServerConfiguration -Id 1 -Name "https://jira.example.com"
 
-                (Get-ServerConfiguration | Where-Object Id -eq 1).Name | Should -Be "https://atlassianps.org"
+                (Get-ServerConfiguration | Where-Object Id -eq 1).Name | Should -Be "https://jira.example.com"
             }
 
             It "can change the Uri" {
@@ -221,14 +221,14 @@ Describe "Set-ServerConfiguration" -Tag Unit {
             It "only allowed AtlassianPSVII server types" {
                 Get-ServerConfiguration | Should -HaveCount 2
 
-                { Set-ServerConfiguration -Id 1 -Name "Bitbucket" -Uri "https://atlassianps.org" -Type Bitbucket } | Should -Not -Throw
-                { Set-ServerConfiguration -Id 1 -Name "Confluence" -Uri "https://atlassianps.org" -Type Confluence } | Should -Not -Throw
-                { Set-ServerConfiguration -Id 1 -Name "Jira" -Uri "https://atlassianps.org" -Type Jira } | Should -Not -Throw
+                { Set-ServerConfiguration -Id 1 -Name "Bitbucket" -Uri "https://jira.example.com" -Type Bitbucket } | Should -Not -Throw
+                { Set-ServerConfiguration -Id 1 -Name "Confluence" -Uri "https://jira.example.com" -Type Confluence } | Should -Not -Throw
+                { Set-ServerConfiguration -Id 1 -Name "Jira" -Uri "https://jira.example.com" -Type Jira } | Should -Not -Throw
                 # Hipchat is not yet supported
-                { Set-ServerConfiguration -Id 1 -Name "Hipchat" -Uri "https://atlassianps.org" -Type Hipchat } | Should -Throw
+                { Set-ServerConfiguration -Id 1 -Name "Hipchat" -Uri "https://jira.example.com" -Type Hipchat } | Should -Throw
 
-                { Set-ServerConfiguration -Id 1 -Name "None" -Uri "https://atlassianps.org" -Type "" } | Should -Throw
-                { Set-ServerConfiguration -Id 1 -Name "Github" -Uri "https://atlassianps.org" -Type Github } | Should -Throw
+                { Set-ServerConfiguration -Id 1 -Name "None" -Uri "https://jira.example.com" -Type "" } | Should -Throw
+                { Set-ServerConfiguration -Id 1 -Name "Github" -Uri "https://jira.example.com" -Type Github } | Should -Throw
                 { Set-ServerConfiguration -Id 1 -Uri "relative/path" } | Should -Throw
                 { Set-ServerConfiguration -Id 0 -Name "Invalid" } | Should -Throw
 

@@ -1,6 +1,4 @@
 ---
-layout: documentation
-permalink: /docs/AtlassianPS.Configuration/classes/
 hide: true
 ---
 # AtlassianPSVII.Configuration classes
