@@ -15,9 +15,13 @@
     if ($isWindowsPlatform) {
         $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
         $fileInfo = [IO.FileInfo]::new($resolvedPath)
-        $security = [IO.FileSystemAclExtensions]::GetAccessControl($fileInfo)
+        # .NET (PowerShell 7) exposes file ACLs through FileSystemAclExtensions; .NET Framework
+        # (Windows PowerShell 5.1) has them as FileInfo instance methods instead.
+        $aclExtensions = 'System.IO.FileSystemAclExtensions' -as [Type]
+        $security = if ($aclExtensions) { $aclExtensions::GetAccessControl($fileInfo) } else { $fileInfo.GetAccessControl() }
         $security.SetAccessRuleProtection($true, $false)
-        foreach ($accessRule in @($security.Access)) {
+        # On .NET (PS 7) Access is $null once inheritance is removed; @($null) would yield a null rule.
+        foreach ($accessRule in @($security.Access | Where-Object { $null -ne $_ })) {
             $null = $security.RemoveAccessRuleAll($accessRule)
         }
         $security.AddAccessRule(
@@ -27,7 +31,7 @@
                 [Security.AccessControl.AccessControlType]::Allow
             )
         )
-        [IO.FileSystemAclExtensions]::SetAccessControl($fileInfo, $security)
+        if ($aclExtensions) { $aclExtensions::SetAccessControl($fileInfo, $security) } else { $fileInfo.SetAccessControl($security) }
         return
     }
 

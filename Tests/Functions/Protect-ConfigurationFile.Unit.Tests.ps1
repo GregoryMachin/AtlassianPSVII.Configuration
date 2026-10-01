@@ -10,7 +10,7 @@ Describe "Protect-ConfigurationFile" -Tag Unit {
     InModuleScope "AtlassianPSVII.Configuration" {
         It "restricts a file without changing its content" {
             $path = Join-Path $TestDrive 'Configuration.psd1'
-            Set-Content -LiteralPath $path -Value '@{}' -Encoding utf8BOM
+            [IO.File]::WriteAllText($path, '@{}', [Text.UTF8Encoding]::new($true))  # BOM, on PS 5.1 and 7
             $before = [IO.File]::ReadAllBytes($path)
 
             Protect-ConfigurationFile -Path $path
