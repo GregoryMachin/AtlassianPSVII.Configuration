@@ -8,7 +8,8 @@ Describe 'AtlassianPSVII.Standards version consistency' -Tag Unit {
 
     It 'keeps workflow setup action pins aligned with build.requirements' {
         $buildRequirementsPath = Join-Path -Path $script:projectRoot -ChildPath 'Tools/build.requirements.psd1'
-        $buildRequirements = Import-PowerShellDataFile -Path $buildRequirementsPath
+        # Parse the array-style requirements file: Import-PowerShellDataFile returns only its first entry.
+        $buildRequirements = @([System.Management.Automation.Language.Parser]::ParseFile($buildRequirementsPath, [ref]$null, [ref]$null).EndBlock.Statements[0].PipelineElements[0].Expression.SafeGetValue())
         $standardsRequirement = $buildRequirements |
             Where-Object { $_.ModuleName -eq 'AtlassianPSVII.Standards' } |
             Select-Object -First 1
@@ -39,7 +40,8 @@ Describe 'AtlassianPSVII.Standards version consistency' -Tag Unit {
 
     It 'uses the same standards version in build script and release workflow publish orchestration' {
         $buildRequirementsPath = Join-Path -Path $script:projectRoot -ChildPath 'Tools/build.requirements.psd1'
-        $buildRequirements = Import-PowerShellDataFile -Path $buildRequirementsPath
+        # Parse the array-style requirements file: Import-PowerShellDataFile returns only its first entry.
+        $buildRequirements = @([System.Management.Automation.Language.Parser]::ParseFile($buildRequirementsPath, [ref]$null, [ref]$null).EndBlock.Statements[0].PipelineElements[0].Expression.SafeGetValue())
         $standardsRequirement = $buildRequirements |
             Where-Object { $_.ModuleName -eq 'AtlassianPSVII.Standards' } |
             Select-Object -First 1
@@ -65,11 +67,11 @@ Describe 'AtlassianPSVII.Standards version consistency' -Tag Unit {
         $setupScriptContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath 'Tools/setup.ps1') -Raw
         $updateScriptContent = Get-Content -LiteralPath (Join-Path -Path $script:projectRoot -ChildPath 'Tools/update.dependencies.ps1') -Raw
 
-        $setupScriptContent | Should -Match '\$buildRequirements\s*=\s*Import-PowerShellDataFile'
+        $setupScriptContent | Should -Match '\$buildRequirements\s*=\s*@\(\[System\.Management\.Automation\.Language\.Parser\]::ParseFile\('
         $setupScriptContent | Should -Not -Match '\$standardsVersion\s*=\s*''[^'']+'''
         $setupScriptContent | Should -Match '-RequiredVersion\s+\$standardsVersion'
 
-        $updateScriptContent | Should -Match '\$buildRequirements\s*=\s*Import-PowerShellDataFile'
+        $updateScriptContent | Should -Match '\$buildRequirements\s*=\s*@\(\[System\.Management\.Automation\.Language\.Parser\]::ParseFile\('
         $updateScriptContent | Should -Not -Match '\$standardsVersion\s*=\s*''[^'']+'''
         $updateScriptContent | Should -Match '-RequiredVersion\s+\$standardsVersion'
         $updateScriptContent | Should -Match '\$PSCmdlet\.ShouldProcess\('
