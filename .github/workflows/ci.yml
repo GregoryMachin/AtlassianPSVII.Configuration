@@ -39,7 +39,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: GregoryMachin/AtlassianPSVII.Standards/.github/actions/setup-powershell@c70eaec1e4d771fe56f9e0b378eda1e521db8a07 # v1.0.0
 
       - run: Invoke-Build -Task Lint
@@ -50,7 +50,7 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: GregoryMachin/AtlassianPSVII.Standards/.github/actions/setup-powershell@c70eaec1e4d771fe56f9e0b378eda1e521db8a07 # v1.0.0
 
       - run: Invoke-Build -Task Clean, Build
@@ -66,7 +66,7 @@ jobs:
     needs: build
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: GregoryMachin/AtlassianPSVII.Standards/.github/actions/setup-powershell@c70eaec1e4d771fe56f9e0b378eda1e521db8a07 # v1.0.0
         with:
           ps-version: "5"
@@ -106,7 +106,7 @@ jobs:
           - { os: ubuntu-latest, name: "Ubuntu" }
           - { os: macos-latest, name: "macOS" }
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: GregoryMachin/AtlassianPSVII.Standards/.github/actions/setup-powershell@c70eaec1e4d771fe56f9e0b378eda1e521db8a07 # v1.0.0
 
       - uses: actions/download-artifact@v8
